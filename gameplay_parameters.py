@@ -6,8 +6,8 @@ LEVELS = {
         "maze_id": "MAZE_A",
         "challenges_per_school": 4,
         "scene_type": "addition",
-        "num1_range": (9, 30),
-        "num2_range": (4, 20),
+        "num1_range": (9, 29),
+        "num2_range": (4, 19),
     },
     2: {
         "title": "Level 2 - Compare Operators",
@@ -35,8 +35,8 @@ LEVELS = {
         "maze_id": "MAZE_A",
         "challenges_per_school": 3,
         "scene_type": "addition",
-        "num1_range": (19, 30),
-        "num2_range": (1, 25),
+        "num1_range": (19, 39),
+        "num2_range": (1, 28),
     },
     6: {
         "title": "Level 6 - French Sight Words",
