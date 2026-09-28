@@ -1,0 +1,500 @@
+[TIER_1] | voici | Regarde ___ le livre rouge sur la table. | Regarde voici le livre rouge sur la table.
+[TIER_1] | voici | L'élève crie: ___ le chat qui court! | L'élève crie: voici le chat qui court!
+[TIER_1] | voici | Madame, ___ un beau dessin pour vous. | Madame, voici un beau dessin pour vous.
+[TIER_1] | voici | Ouvre la porte, ___ la surprise! | Ouvre la porte, voici la surprise!
+[TIER_1] | voici | Prends ton crayon, ___ ton cahier. | Prends ton crayon, voici ton cahier.
+[TIER_1] | dans | Le crayon vert est ___ la trousse. | Le crayon vert est dans la trousse.
+[TIER_1] | dans | Les élèves jouent ___ la cour d'école. | Les élèves jouent dans la cour d'école.
+[TIER_1] | dans | Mets ton manteau ___ le grand sac. | Mets ton manteau dans le grand sac.
+[TIER_1] | dans | L'oiseau chante ___ le grand arbre. | L'oiseau chante dans le grand arbre.
+[TIER_1] | dans | Il y a de l'eau ___ la bouteille. | Il y a de l'eau dans la bouteille.
+[TIER_1] | un | J'ai trouvé ___ beau coquillage gris. | J'ai trouvé un beau coquillage gris.
+[TIER_1] | un | Le maître lit ___ livre d'histoires. | Le maître lit un livre d'histoires.
+[TIER_1] | un | Regarde ___ chien qui court vite. | Regarde un chien qui court vite.
+[TIER_1] | un | Paul mange ___ bonbon rouge et sucré. | Paul mange un bonbon rouge et sucré.
+[TIER_1] | un | Il y a ___ crayon bleu sur le bureau. | Il y a un crayon bleu sur le bureau.
+[TIER_1] | je | ___ dessine un chat avec des moustaches. | Je dessine un chat avec des moustaches.
+[TIER_1] | je | ___ mange une pomme rouge à midi. | Je mange une pomme rouge à midi.
+[TIER_1] | je | ___ lance le ballon vert à mon ami. | Je lance le ballon vert à mon ami.
+[TIER_1] | je | ___ écoute la belle histoire du maître. | Je écoute la belle histoire du maître.
+[TIER_1] | je | ___ marche doucement dans le couloir. | Je marche doucement dans le couloir.
+[TIER_1] | a | Léa ___ un joli chaton gris et blanc. | Léa a un joli chaton gris et blanc.
+[TIER_1] | a | Mon grand frère ___ un vélo rouge. | Mon grand frère a un vélo rouge.
+[TIER_1] | a | La classe ___ une belle table ronde. | La classe a une belle table ronde.
+[TIER_1] | a | Pierre ___ faim à l'heure du goûter. | Pierre a faim à l'heure du goûter.
+[TIER_1] | a | Marie ___ peur du chien qui aboie. | Marie a peur du chien qui aboie.
+[TIER_1] | la | Le chat dort paisiblement sur ___ chaise. | Le chat dort paisiblement sur la chaise.
+[TIER_1] | la | Donne-moi ___ gomme bleue s'il te plaît. | Donne-moi la gomme bleue s'il te plaît.
+[TIER_1] | la | Regarde ___ belle fleur rouge et jaune. | Regarde la belle fleur rouge et jaune.
+[TIER_1] | la | Ouvre ___ porte pour entrer en classe. | Ouvre la porte pour entrer en classe.
+[TIER_1] | la | Ferme ___ fenêtre car il fait froid. | Ferme la fenêtre car il fait froid.
+[TIER_1] | J'aime | ___ lire des histoires de dragons. | J'aime lire des histoires de dragons.
+[TIER_1] | J'aime | ___ jouer au ballon dans la cour. | J'aime jouer au ballon dans la cour.
+[TIER_1] | J'aime | ___ dessiner des fleurs multicolores. | J'aime dessiner des fleurs multicolores.
+[TIER_1] | J'aime | ___ manger une glace au chocolat. | J'aime manger une glace au chocolat.
+[TIER_1] | J'aime | ___ chanter avec mes bons amis. | J'aime chanter avec mes bons amis.
+[TIER_1] | petit | Le ___ chaton boit du lait frais. | Le petit chaton boit du lait frais.
+[TIER_1] | petit | Un ___ oiseau chante sur la branche. | Un petit oiseau chante sur la branche.
+[TIER_1] | petit | Donne ce ___ pain à ta petite sœur. | Donne ce petit pain à ta petite sœur.
+[TIER_1] | petit | C'est un ___ chien très mignon. | C'est un petit chien très mignon.
+[TIER_1] | petit | Le ___ poisson nage dans l'aquarium. | Le petit poisson nage dans l'aquarium.
+[TIER_1] | sur | Le chat noir dort ___ le tapis chaud. | Le chat noir dort sur le tapis chaud.
+[TIER_1] | sur | Pose ton livre vert ___ la table. | Pose ton livre vert sur la table.
+[TIER_1] | sur | L'oiseau chante ___ la grande branche. | L'oiseau chante sur la grande branche.
+[TIER_1] | sur | Le cartable est posé ___ le banc. | Le cartable est posé sur le banc.
+[TIER_1] | sur | Il y a de la poussière ___ le meuble. | Il y a de la poussière sur le meuble.
+[TIER_1] | il | Regarde le chat, ___ dort au soleil. | Regarde le chat, il dort au soleil.
+[TIER_1] | il | Paul est gentil, ___ partage ses jouets. | Paul est gentil, il partage ses jouets.
+[TIER_1] | il | Le soleil brille, ___ chauffe la terre. | Le soleil brille, il chauffe la terre.
+[TIER_1] | il | Mon père sourit, ___ prépare le repas. | Mon père sourit, il prépare le repas.
+[TIER_1] | il | L'ours marche dans les bois, ___ cherche du miel. | L'ours marche dans les bois, il cherche du miel.
+[TIER_1] | ami | Lucas est mon meilleur ___ d'école. | Lucas est mon meilleur ami d'école.
+[TIER_1] | ami | Je joue au ballon avec mon ___ Paul. | Je joue au ballon avec mon ami Paul.
+[TIER_1] | ami | Dis bonjour à ton ___ de classe. | Dis bonjour à ton ami de classe.
+[TIER_1] | ami | Un bon ___ partage toujours ses bonbons. | Un bon ami partage toujours ses bonbons.
+[TIER_1] | ami | Viens rencontrer mon nouvel ___ Tom. | Viens rencontrer mon nouvel ami Tom.
+[TIER_1] | mon | ___ cartable rouge est près de la porte. | Mon cartable rouge est près de la porte.
+[TIER_1] | mon | J'appelle ___ petit chien dans le jardin. | J'appelle mon petit chien dans le jardin.
+[TIER_1] | mon | Voici ___ beau dessin de fleurs bleues. | Voici mon beau dessin de fleurs bleues.
+[TIER_1] | mon | Tu connais ___ gentil maître d'école ? | Tu connais mon gentil maître d'école ?
+[TIER_1] | mon | Range ___ crayon vert dans la trousse. | Range mon crayon vert dans la trousse.
+[TIER_1] | nous | ___ chantons une belle chanson française. | Nous chantons une belle chanson française.
+[TIER_1] | nous | Regarde les oiseaux, ___ volent haut. | Regarde les oiseaux, nous volent haut.
+[TIER_1] | nous | ___ allons au parc avec la maîtresse. | Nous allons au parc avec la maîtresse.
+[TIER_1] | nous | Avec mes amis, ___ jouons au loup. | Avec mes amis, nous jouons au loup.
+[TIER_1] | nous | ___ rangeons nos livres dans le meuble. | Nous rangeons nos livres dans le meuble.
+[TIER_1] | vois | Je ___ un oiseau bleu dans l'arbre. | Je vois un oiseau bleu dans l'arbre.
+[TIER_1] | vois | Tu ___ le chat noir sur le mur ? | Tu vois le chat noir sur le mur ?
+[TIER_1] | vois | Par la fenêtre, je ___ le soleil. | Par la fenêtre, je vois le soleil.
+[TIER_1] | vois | Est-ce que tu ___ mon crayon rouge ? | Est-ce que tu vois mon crayon rouge ?
+[TIER_1] | vois | Je ___ un beau papillon jaune. | Je vois un beau papillon jaune.
+[TIER_1] | est | Le chat ___ gris et très doux. | Le chat est gris et très doux.
+[TIER_1] | est | La trousse ___ sur la grande table. | La trousse est sur la grande table.
+[TIER_1] | est | Mon livre préféré ___ bleu et jaune. | Mon livre préféré est bleu et jaune.
+[TIER_1] | est | L'école ___ grande et lumineuse. | L'école est grande et lumineuse.
+[TIER_1] | est | La pomme rouge ___ délicieuse. | La pomme rouge est délicieuse.
+[TIER_1] | pour | J'ai un cadeau ___ ma maman chérie. | J'ai un cadeau pour ma maman chérie.
+[TIER_1] | pour | Prends ce feutre ___ dessiner un chat. | Prends ce feutre pour dessiner un chat.
+[TIER_1] | pour | C'est une belle histoire ___ les enfants. | C'est une belle histoire pour les enfants.
+[TIER_1] | pour | Ouvre la porte ___ laisser entrer l'air. | Ouvre la porte pour laisser entrer l'air.
+[TIER_1] | pour | Merci ___ ton aide précieuse en classe. | Merci ton aide précieuse en classe.
+[TIER_1] | suis | Je ___ un élève de première année. | Je suis un élève de première année.
+[TIER_1] | suis | Aujourd'hui, je ___ très heureux. | Aujourd'hui, je suis très heureux.
+[TIER_1] | suis | Je ___ le premier dans la ligne. | Je suis le premier dans la ligne.
+[TIER_1] | suis | Je ___ fatigué après le sport. | Je suis fatigué après le sport.
+[TIER_1] | suis | Je ___ prêt pour aller en récréation. | Je suis prêt pour aller en récréation.
+[TIER_1] | c'est | Regarde le ciel bleu, ___ magnifique! | Regarde le ciel bleu, c'est magnifique!
+[TIER_1] | c'est | Prends mon crayon rouge, ___ à toi. | Prends mon crayon rouge, c'est à toi.
+[TIER_1] | c'est | Écoute cette belle chanson, ___ doux. | Écoute cette belle chanson, c'est doux.
+[TIER_1] | c'est | Le chien aboie fort, ___ un danger. | Le chien aboie fort, c'est un danger.
+[TIER_1] | c'est | Touche cette fourrure, ___ très doux. | Touche cette fourrure, c'est très doux.
+[TIER_1] | des | Il y a ___ beaux livres sur l'étagère. | Il y a des beaux livres sur l'étagère.
+[TIER_1] | des | Le chat chasse ___ petites souris. | Le chat chasse des petites souris.
+[TIER_1] | des | Je mange ___ pommes rouges et croquantes. | Je mange des pommes rouges et croquantes.
+[TIER_1] | des | La maîtresse lit ___ belles histoires. | La maîtresse lit des belles histoires.
+[TIER_1] | des | Nous dessinons ___ fleurs multicolores. | Nous dessinons des fleurs multicolores.
+[TIER_1] | ici | Viens t'asseoir ___ à côté de moi. | Viens t'asseoir ici à côté de moi.
+[TIER_1] | ici | Le chaton dort tranquillement ___. | Le chaton dort tranquillement ici.
+[TIER_1] | ici | Pose ton cartable vert ___, Paul. | Pose ton cartable vert ici, Paul.
+[TIER_1] | ici | Nous travaillons tous ensemble ___. | Nous travaillons tous ensemble ici.
+[TIER_1] | ici | Regarde, le livre rouge est ___. | Regarde, le livre rouge est ici.
+[TIER_1] | comme | Le chat saute ___ un petit singe. | Le chat saute comme un petit singe.
+[TIER_1] | comme | Tu as un beau chapeau ___ le mien. | Tu as un beau chapeau comme le mien.
+[TIER_1] | comme | L'eau brille ___ un miroir magique. | L'eau brille comme un miroir magique.
+[TIER_1] | comme | Il court vite ___ un petit lapin. | Il court vite comme un petit lapin.
+[TIER_1] | comme | Chante ___ un petit oiseau du jardin. | Chante comme un petit oiseau du jardin.
+[TIER_1] | toi | Je veux jouer au ballon avec ___. | Je veux jouer au ballon avec toi.
+[TIER_1] | toi | Donne ton crayon vert à ___. | Donne ton crayon vert à toi.
+[TIER_1] | toi | Regarde ce beau dessin pour ___. | Regarde ce beau dessin pour toi.
+[TIER_1] | toi | Tu es très gentil, merci ___. | Tu es très gentil, merci toi.
+[TIER_1] | toi | Viens t'asseoir à côté de ___. | Viens t'asseoir à côté de toi.
+[TIER_1] | dit | Le maître ___ d'écouter l'histoire. | Le maître dit d'écouter l'histoire.
+[TIER_1] | dit | Mon ami ___ bonjour en arrivant. | Mon ami dit bonjour en arrivant.
+[TIER_1] | dit | La maman ___ de ranger les jouets. | La maman dit de ranger les jouets.
+[TIER_1] | dit | Le petit garçon ___ qu'il a faim. | Le petit garçon dit qu'il a faim.
+[TIER_1] | dit | L'élève ___ la bonne réponse. | L'élève dit la bonne réponse.
+[TIER_1] | qui | Le chat ___ dort est très calme. | Le chat qui dort est très calme.
+[TIER_1] | qui | C'est l'oiseau ___ chante dans l'arbre. | C'est l'oiseau qui chante dans l'arbre.
+[TIER_1] | qui | Montre-moi le garçon ___ court vite. | Montre-moi le garçon qui court vite.
+[TIER_1] | qui | J'aime le chien ___ remue la queue. | J'aime le chien qui remue la queue.
+[TIER_1] | qui | Voici la fille ___ dessine une fleur. | Voici la fille qui dessine une fleur.
+[TIER_1] | avec | Je joue au ballon ___ mon ami. | Je joue au ballon avec mon ami.
+[TIER_1] | avec | Maman écrit ___ un stylo bleu. | Maman écrit avec un stylo bleu.
+[TIER_1] | avec | Viens dessiner ___ nous en classe. | Viens dessiner avec nous en classe.
+[TIER_1] | avec | Le chat dort ___ son petit chaton. | Le chat dort avec son petit chaton.
+[TIER_1] | avec | Coupe le papier ___ des ciseaux ronds. | Coupe le papier avec des ciseaux ronds.
+[TIER_2] | de | Le livre ___ français est sur la table. | Le livre de français est sur la table.
+[TIER_2] | de | Ouvre la porte ___ la salle de classe. | Ouvre la porte de la salle de classe.
+[TIER_2] | de | J'ai besoin ___ un crayon rouge. | J'ai besoin d'un crayon rouge.
+[TIER_2] | de | C'est la poupée ___ ma petite sœur. | C'est la poupée de ma petite sœur.
+[TIER_2] | de | La trousse ___ Paul est bleue. | La trousse de Paul est bleue.
+[TIER_2] | et | Le chat ___ le chien dorment au soleil. | Le chat et le chien dorment au soleil.
+[TIER_2] | et | Prends ton crayon ___ ta gomme. | Prends ton crayon et ta gomme.
+[TIER_2] | et | Marie ___ Paul jouent dans la cour. | Marie et Paul jouent dans la cour.
+[TIER_2] | et | J'aime le chocolat ___ les bonbons. | J'aime le chocolat et les bonbons.
+[TIER_2] | et | Le ciel est bleu ___ lumineux. | Le ciel est bleu et lumineux.
+[TIER_2] | moi | Donne ce beau livre rouge à ___. | Donne ce beau livre rouge à moi.
+[TIER_2] | moi | Regarde ___ dessiner un joli chat. | Regarde moi dessiner un joli chat.
+[TIER_2] | moi | Viens t'asseoir à côté de ***. | Viens t'asseoir à côté de moi.
+[TIER_2] | moi | C'est ___ qui ai le ballon vert. | C'est moi qui ai le ballon vert.
+[TIER_2] | moi | Tu veux jouer au ballon avec ___ ? | Tu veux jouer au ballon avec moi ?
+[TIER_2] | viens | ___ jouer avec nous dans la cour. | Viens jouer avec nous dans la cour.
+[TIER_2] | viens | Paul, ___ ici près du tableau. | Paul, viens ici près du tableau.
+[TIER_2] | viens | Je ___ chercher mon cartable bleu. | Je viens chercher mon cartable bleu.
+[TIER_2] | viens | Tu ___ avec moi voir le chat ? | Tu viens avec moi voir le chat ?
+[TIER_2] | viens | La maîtresse appelle: ___ vite! | La maîtresse appelle: viens vite!
+[TIER_2] | y | Le chat est dans la boîte? Oui, il ___ est. | Le chat est dans la boîte? Oui, il y est.
+[TIER_2] | y | Regarde le panier, il y a des pommes ***. | Regarde le panier, il y a des pommes y.
+[TIER_2] | y | La trousse est sur la table? Non, il n'*** a rien. | La trousse est sur la table? Non, il n'y a rien.
+[TIER_2] | y | Je vais à l'école et j'*** entre. | Je vais à l'école et j'y entre.
+[TIER_2] | y | C'est un beau jardin, jouons ___. | C'est un beau jardin, jouons y.
+[TIER_2] | peux | Tu ___ me prêter ton crayon vert? | Tu peux me prêter ton crayon vert?
+[TIER_2] | peux | Je ___ dessiner un grand chaton. | Je peux dessiner un grand chaton.
+[TIER_2] | peux | Est-ce que je ___ aller aux toilettes? | Est-ce que je peux aller aux toilettes?
+[TIER_2] | peux | Nous ___ ranger les livres ensemble. | Nous pouvons ranger les livres ensemble.
+[TIER_2] | peux | Tu ___ voir l'oiseau sur l'arbre. | Tu peux voir l'oiseau sur l'arbre.
+[TIER_2] | au | Le chat dort ___ soleil sur le tapis. | Le chat dort au soleil sur le tapis.
+[TIER_2] | au | Nous jouons ___ ballon dans la cour. | Nous jouons au ballon dans la cour.
+[TIER_2] | au | Le garçon dit bonjour ___ maître. | Le garçon dit bonjour au maître.
+[TIER_2] | au | Je donne du pain ___ petit canard. | Je donne du pain au petit canard.
+[TIER_2] | au | Regarde le chien ___ milieu du jardin. | Regarde le chien au milieu du jardin.
+[TIER_2] | tu | ___ as un joli crayon rouge. | Tu as un joli crayon rouge.
+[TIER_2] | tu | Est-ce que ___ aimes le chocolat? | Est-ce que tu aimes le chocolat?
+[TIER_2] | tu | ___ dessines un chat très mignon. | Tu dessines un chat très mignon.
+[TIER_2] | tu | Quand est-ce que ___ viens jouer? | Quand est-ce que tu viens jouer?
+[TIER_2] | tu | ___ écoutes la belle histoire. | Tu écoutes la belle histoire.
+[TIER_2] | maman | ___ prépare un bon gâteau au chocolat. | Maman prépare un bon gâteau au chocolat.
+[TIER_2] | maman | Donne ce beau dessin à ___ s'il te plaît. | Donne ce beau dessin à maman s'il te plaît.
+[TIER_2] | maman | ___ fait un câlin à son petit garçon. | Maman fait un câlin à son petit garçon.
+[TIER_2] | maman | La petite fille appelle sa ___. | La petite fille appelle sa maman.
+[TIER_2] | maman | ___ range les jouets dans la chambre. | Maman range les jouets dans la chambre.
+[TIER_2] | va | Le chat ___ vite sous la table. | Le chat va vite sous la table.
+[TIER_2] | va | Paul ___ à l'école avec son cartable. | Paul va à l'école avec son cartable.
+[TIER_2] | va | L'oiseau ___ se poser sur l'arbre. | L'oiseau va se poser sur l'arbre.
+[TIER_2] | va | Comment ça ___ aujourd'hui, mon ami? | Comment ça va aujourd'hui, mon ami?
+[TIER_2] | va | La voiture rouge ___ très vite. | La voiture rouge va très vite.
+[TIER_2] | non | Est-ce un chat? ___, c'est un chien. | Est-ce un chat?, non, c'est un chien.
+[TIER_2] | non | Tu veux du lait? ___, je veux de l'eau. | Tu veux du lait?, non, je veux de l'eau.
+[TIER_2] | non | Le livre est rouge? ___, il est bleu. | Le livre est rouge?, non, il est bleu.
+[TIER_2] | non | Tu as fini? ___, pas encore. | Tu as fini?, non, pas encore.
+[TIER_2] | non | C'est à toi? ___, c'est à Paul. | C'est à toi?, non, c'est à Paul.
+[TIER_2] | lui | Donne ce beau livre rouge à ___. | Donne ce beau livre rouge à lui.
+[TIER_2] | lui | Le chien court après ___. | Le chien court après lui.
+[TIER_2] | lui | C'est mon ami, je parle avec ___. | C'est mon ami, je parle avec lui.
+[TIER_2] | lui | Regarde le chat, ___ dort au soleil. | Regarde le chat, lui dort au soleil.
+[TIER_2] | lui | Paul est content, le maître sourit à ___. | Paul est content, le maître sourit à lui.
+[TIER_2] | papa | ___ lit un grand journal le soir. | Papa lit un grand journal le soir.
+[TIER_2] | papa | ___ prépare le vélo pour la promenade. | Papa prépare le vélo pour la promenade.
+[TIER_2] | papa | Donne la main à ___ pour traverser. | Donne la main à papa pour traverser.
+[TIER_2] | papa | Le petit garçon embrasse son ___. | Le petit garçon embrasse son papa.
+[TIER_2] | papa | ___ répare la petite voiture rouge. | Papa répare la petite voiture rouge.
+[TIER_2] | regarde | ___ le chat qui dort sur le tapis. | Regarde le chat qui dort sur le tapis.
+[TIER_2] | regarde | ___ ce beau dessin de fleurs bleues. | Regarde ce beau dessin de fleurs bleues.
+[TIER_2] | regarde | ___ l'oiseau qui chante dans l'arbre. | Regarde l'oiseau qui chante dans l'arbre.
+[TIER_2] | regarde | ___ la maîtresse écrire au tableau. | Regarde la maîtresse écrire au tableau.
+[TIER_2] | regarde | ___ mon nouveau cartable rouge. | Regarde mon nouveau cartable rouge.
+[TIER_2] | si | ___ tu veux, nous jouons au ballon. | Si tu veux, nous jouons au ballon.
+[TIER_2] | si | Le chat est ___ mignon et doux. | Le chat est si mignon et doux.
+[TIER_2] | si | ___ tu as faim, mange une pomme. | Si tu as faim, mange une pomme.
+[TIER_2] | si | La soupe est ___ chaude aujourd'hui. | La soupe est si chaude aujourd'hui.
+[TIER_2] | si | Regarde ___ le livre est dans le sac. | Regarde si le livre est dans le sac.
+[TIER_2] | une | J'ai trouvé ___ belle fleur rouge. | J'ai trouvé une belle fleur rouge.
+[TIER_2] | une | La maîtresse lit ___ belle histoire. | La maîtresse lit une belle histoire.
+[TIER_2] | une | Prends ___ pomme rouge et croquante. | Prends une pomme rouge et croquante.
+[TIER_2] | une | Il y a ___ trousse bleue sur la table. | Il y a une trousse bleue sur la table.
+[TIER_2] | une | Le chat chasse ___ petite souris. | Le chat chasse une petite souris.
+[TIER_2] | pas | Je n'ai ___ de crayon rouge. | Je n'ai pas de crayon rouge.
+[TIER_2] | pas | Le chat ne court ___ dans la classe. | Le chat ne court pas dans la classe.
+[TIER_2] | pas | Tu n'as ___ ton cartable bleu. | Tu n'as pas ton cartable bleu.
+[TIER_2] | pas | Ce n'est ___ un chien, c'est un chat. | Ce n'est pas un chien, c'est un chat.
+[TIER_2] | pas | Il ne pleut ___ aujourd'hui. | Il ne pleut pas aujourd'hui.
+[TIER_2] | se | Le chat ___ lave avec sa patte. | Le chat se lave avec sa patte.
+[TIER_2] | se | L'élève ___ prépare pour la récréation. | L'élève se prépare pour la récréation.
+[TIER_2] | se | Le petit garçon ___ cache sous la table. | Le petit garçon se cache sous la table.
+[TIER_2] | se | L'oiseau ___ pose sur la haute branche. | L'oiseau se pose sur la haute branche.
+[TIER_2] | se | Le chien ___ couche sur le tapis doux. | Le chien se couche sur le tapis doux.
+[TIER_2] | merci | ___, madame, pour ce beau livre. | Merci, madame, pour ce beau livre.
+[TIER_2] | merci | Prends ton crayon, ___ ! | Prends ton crayon, merci !
+[TIER_2] | merci | Donne le ballon, ___ mon ami. | Donne le ballon, merci mon ami.
+[TIER_2] | merci | ___ pour le chocolat et le bonbon. | Merci pour le chocolat et le bonbon.
+[TIER_2] | merci | C'est gentil, ___ beaucoup. | C'est gentil, merci beaucoup.
+[TIER_2] | trop | Le sac est ___ lourd pour moi. | Le sac est trop lourd pour moi.
+[TIER_2] | trop | Ne mange pas ___ de bonbons sucrés. | Ne mange pas trop de bonbons sucrés.
+[TIER_2] | trop | Le manteau est ___ grand pour le garçon. | Le manteau est trop grand pour le garçon.
+[TIER_2] | trop | Il fait ___ chaud dans la classe. | Il fait trop chaud dans la classe.
+[TIER_2] | trop | La ligne est ___ longue à dessiner. | La ligne est trop longue à dessiner.
+[TIER_2] | gros | Le chat noir est un ___ chat. | Le chat noir est un gros chat.
+[TIER_2] | gros | Regarde ce ___ chien dans le jardin. | Regarde ce gros chien dans le jardin.
+[TIER_2] | gros | Il y a un ___ nuage gris dans le ciel. | Il y a un gros nuage gris dans le ciel.
+[TIER_2] | gros | Le lapin mange un ___ morceau de pain. | Le lapin mange un gros morceau de pain.
+[TIER_2] | gros | C'est un ___ livre d'histoires rouges. | C'est un gros livre d'histoires rouges.
+[TIER_2] | en | Le chat dort ___ silence sur le tapis. | Le chat dort en silence sur le tapis.
+[TIER_2] | en | Nous voyageons ___ France en été. | Nous voyageons en France en été.
+[TIER_2] | en | Le crayon est fait ___ bois. | Le crayon est fait en bois.
+[TIER_2] | en | Range ton livre ___ classe, s'il te plaît. | Range ton livre en classe, s'il te plaît.
+[TIER_2] | en | Je mange une pomme ___ morceaux. | Je mange une pomme en morceaux.
+[TIER_2] | vers | L'oiseau vole ___ le grand arbre vert. | L'oiseau vole vers le grand arbre vert.
+[TIER_2] | vers | Le chat marche ___ sa gamelle de lait. | Le chat marche vers sa gamelle de lait.
+[TIER_2] | vers | Tourne-toi ___ le tableau noir. | Tourne-toi vers le tableau noir.
+[TIER_2] | vers | Le garçon court ___ son ami. | Le garçon court vers son ami.
+[TIER_2] | vers | Regarde la voiture rouler ___ la porte. | Regarde la voiture rouler vers la porte.
+[TIER_2] | plus | Je veux ___ de chocolat s'il te plaît. | Je veux plus de chocolat s'il te plaît.
+[TIER_2] | plus | Le chat noir court ___ vite que le chien. | Le chat noir court plus vite que le chien.
+[TIER_2] | plus | Je n'ai ___ de crayons verts. | Je n'ai plus de crayons verts.
+[TIER_2] | plus | Lis ___ fort pour que toute la classe écoute. | Lis plus fort pour que toute la classe écoute.
+[TIER_2] | plus | Le soleil brille ___ en été. | Le soleil brille plus en été.
+[TIER_2] | les | Le chat attrape ___ petites souris grises. | Le chat attrape les petites souris grises.
+[TIER_2] | les | Range ___ crayons dans la trousse bleue. | Range les crayons dans la trousse bleue.
+[TIER_2] | les | J'aime ___ pommes rouges et sucrées. | J'aime les pommes rouges et sucrées.
+[TIER_2] | les | La maîtresse lit ___ livres d'histoires. | La maîtresse lit les livres d'histoires.
+[TIER_2] | les | Regarde ___ oiseaux chanter dans l'arbre. | Regarde les oiseaux chanter dans l'arbre.
+[TIER_3] | parce que | Je mange une pomme ___ j'ai faim. | Je mange une pomme parce que j'ai faim.
+[TIER_3] | parce que | Le chat dort ___ il est fatigué. | Le chat dort parce que il est fatigué.
+[TIER_3] | parce que | Je mets mon manteau ___ il fait froid. | Je mets mon manteau parce que il fait froid.
+[TIER_3] | parce que | Léa sourit ___ elle a un cadeau. | Léa sourit parce que elle a un cadeau.
+[TIER_3] | parce que | Nous aimons l'école ___ c'est amusant. | Nous aimons l'école parce que c'est amusant.
+[TIER_3] | sauf | Tous les élèves sont là ___ Paul. | Tous les élèves sont là sauf Paul.
+[TIER_3] | sauf | J'aime tous les fruits ___ le citron. | J'aime tous les fruits sauf le citron.
+[TIER_3] | sauf | Les enfants jouent dehors ___ quand il pleut. | Les enfants jouent dehors sauf quand il pleut.
+[TIER_3] | sauf | Le chat mange tout ___ ses légumes. | Le chat mange tout sauf ses légumes.
+[TIER_3] | sauf | Tout le monde écoute ___ le petit chien. | Tout le monde écoute sauf le petit chien.
+[TIER_3] | toujours | Le chat dort ___ sur le tapis doux. | Le chat dort toujours sur le tapis doux.
+[TIER_3] | toujours | Marie est ___ gentille avec ses amis. | Marie est toujours gentille avec ses amis.
+[TIER_3] | toujours | Le soleil brille ___ dans le ciel bleu. | Le soleil brille toujours dans le ciel bleu.
+[TIER_3] | toujours | Mon petit frère demande ___ un câlin. | Mon petit frère demande toujours un câlin.
+[TIER_3] | toujours | Nous avons ___ nos crayons dans le sac. | Nous avons toujours nos crayons dans le sac.
+[TIER_3] | même | Tu as le ___ cartable rouge que moi. | Tu as le même cartable rouge que moi.
+[TIER_3] | même | Le chat et le chien dorment au ___ endroit. | Le chat et le chien dorment au même endroit.
+[TIER_3] | même | C'est la ___ histoire que hier. | C'est la même histoire que hier.
+[TIER_3] | même | Nous avons le ___ crayon vert. | Nous avons le même crayon vert.
+[TIER_3] | même | La petite fille porte la ___ robe bleue. | La petite fille porte la même robe bleue.
+[TIER_3] | faim | J'ai ___ de manger une bonne pomme rouge. | J'ai faim de manger une bonne pomme rouge.
+[TIER_3] | faim | Le petit chat a ___ de lait frais. | Le petit chat a faim de lait frais.
+[TIER_3] | faim | Dis à maman si tu as ___. | Dis à maman si tu as faim.
+[TIER_3] | faim | Le chien aboie car il a ___. | Le chien aboie car il a faim.
+[TIER_3] | faim | Après le sport, j'ai très ___. | Après le sport, j'ai très faim.
+[TIER_3] | joli | Regarde ce ___ papillon jaune et bleu. | Regarde ce joli papillon jaune et bleu.
+[TIER_3] | joli | C'est un ___ dessin fait par Paul. | C'est un joli dessin fait par Paul.
+[TIER_3] | joli | Le chaton a un ___ ruban rouge. | Le chaton a un joli ruban rouge.
+[TIER_3] | joli | Tu portes une très jolie robe bleue. | Tu portes une très jolie robe bleue.
+[TIER_3] | joli | Nous avons une belle et joli école. | Nous avons une belle et joli école.
+[TIER_3] | avant | Range tes jouets ___ d'aller au lit. | Range tes jouets avant d'aller au lit.
+[TIER_3] | avant | Le chat mange ___ de dormir. | Le chat mange avant de dormir.
+[TIER_3] | avant | Lave-toi les mains ___ de manger. | Lave-toi les mains avant de manger.
+[TIER_3] | avant | Paul est le premier ___ la ligne. | Paul est le premier avant la ligne.
+[TIER_3] | avant | Mets ton pantalon ___ ton manteau. | Mets ton pantalon avant ton manteau.
+[TIER_3] | court | Le petit chien ___ vite dans le jardin. | Le petit chien court vite dans le jardin.
+[TIER_3] | court | Le chat noir ___ après la souris grise. | Le chat noir court après la souris grise.
+[TIER_3] | court | Un garçon ___ dans la cour d'école. | Un garçon court dans la cour d'école.
+[TIER_3] | court | Le cheval ___ très vite dans le pré. | Le cheval court très vite dans le pré.
+[TIER_3] | court | L'élève ___ pour attraper le ballon. | L'élève court pour attraper le ballon.
+[TIER_3] | comment | ___ tu t'appelles, petit garçon? | Comment tu t'appelles, petit garçon?
+[TIER_3] | comment | Dis-moi ___ dessiner un beau chat. | Dis-moi comment dessiner un beau chat.
+[TIER_3] | comment | ___ tu fais pour courir si vite? | Comment tu fais pour courir si vite?
+[TIER_3] | comment | Montre-moi ___ ouvrir cette boîte bleue. | Montre-moi comment ouvrir cette boîte bleue.
+[TIER_3] | comment | Je ne sais pas ___ lire ce mot. | Je ne sais pas comment lire ce mot.
+[TIER_3] | fini | J'ai ___ mon dessin de fleurs rouges. | J'ai fini mon dessin de fleurs rouges.
+[TIER_3] | fini | Le chat a ___ son bol de lait. | Le chat a fini son bol de lait.
+[TIER_3] | fini | Tu as ___ ton exercice de français ? | Tu as fini ton exercice de français ?
+[TIER_3] | fini | La récréation est ___, rentrons en classe. | La récréation est fini, rentrons en classe.
+[TIER_3] | fini | Paul a ___ de ranger ses crayons. | Paul a fini de ranger ses crayons.
+[TIER_3] | rien | Je n'ai ___ dans ma trousse bleue. | Je n'ai rien dans ma trousse bleue.
+[TIER_3] | rien | Le chat regarde ___ par la fenêtre. | Le chat regarde rien par la fenêtre.
+[TIER_3] | rien | Il n'y a ___ sur la grande table. | Il n'y a rien sur la grande table.
+[TIER_3] | rien | Je ne vois ___ dans la nuit noire. | Je ne vois rien dans la nuit noire.
+[TIER_3] | rien | Paul n'a ___ mangé à son goûter. | Paul n'a rien mangé à son goûter.
+[TIER_3] | ça | Regarde ___ beau dessin sur la table. | Regarde ça beau dessin sur la table.
+[TIER_3] | ça | Tu veux ___ bonbon rouge et sucré ? | Tu veux ça bonbon rouge et sucré ?
+[TIER_3] | ça | Le chat aime ___ quand on le caresse. | Le chat aime ça quand on le caresse.
+[TIER_3] | ça | C'est délicieux, j'aime beaucoup ___. | C'est délicieux, j'aime beaucoup ça.
+[TIER_3] | ça | Ne touche pas à ___, c'est fragile. | Ne touche pas à ça, c'est fragile.
+[TIER_3] | ce | Regarde ___ beau chat noir sur le tapis. | Regarde ce beau chat noir sur le tapis.
+[TIER_3] | ce | ___ livre rouge est à la maîtresse. | Ce livre rouge est à la maîtresse.
+[TIER_3] | ce | J'aime ___ petit chien très mignon. | J'aime ce petit chien très mignon.
+[TIER_3] | ce | Prends ___ crayon vert pour dessiner. | Prends ce crayon vert pour dessiner.
+[TIER_3] | ce | ___ matin, le soleil brille fort. | Ce matin, le soleil brille fort.
+[TIER_3] | vu | J'ai ___ un chat gris dans le jardin. | J'ai vu un chat gris dans le jardin.
+[TIER_3] | vu | Tu as ___ le bel oiseau bleu ? | Tu as vu le bel oiseau bleu ?
+[TIER_3] | vu | La maîtresse a ___ mon dessin. | La maîtresse a vu mon dessin.
+[TIER_3] | vu | Nous avons ___ un grand chien blanc. | Nous avons vu un grand chien blanc.
+[TIER_3] | vu | Paul a ___ son ami dans la cour. | Paul a vu son ami dans la cour.
+[TIER_3] | ou | Tu veux une pomme ___ une banane ? | Tu veux une pomme ou une banane ?
+[TIER_3] | ou | Le chat est sur ___ sous la table ? | Le chat est sur ou sous la table ?
+[TIER_3] | ou | C'est ton livre bleu ___ rouge ? | C'est ton livre bleu ou rouge ?
+[TIER_3] | ou | Tu joues au ballon ___ aux billes ? | Tu joues au ballon ou aux billes ?
+[TIER_3] | ou | Est-ce un chien ___ un chaton ? | Est-ce un chien ou un chaton ?
+[TIER_3] | sœur | Ma grande ___ lit un livre d'histoires. | Ma grande sœur lit un livre d'histoires.
+[TIER_3] | sœur | Je joue à la poupée avec ma ___. | Je joue à la poupée avec ma sœur.
+[TIER_3] | sœur | La ___ de Paul a un cartable bleu. | La sœur de Paul a un cartable bleu.
+[TIER_3] | sœur | Ma petite ___ dessine une jolie fleur. | Ma petite sœur dessine une jolie fleur.
+[TIER_3] | sœur | Viens rencontrer ma ___ à l'école. | Viens rencontrer ma sœur à l'école.
+[TIER_3] | vont | Les élèves ___ en rang dans la classe. | Les élèves vont en rang dans la classe.
+[TIER_3] | vont | Les oiseaux ___ se poser sur l'arbre. | Les oiseaux vont se poser sur l'arbre.
+[TIER_3] | vont | Paul et Léa ___ jouer dans le parc. | Paul et Léa vont jouer dans le parc.
+[TIER_3] | vont | Les chats ___ dormir sur le tapis doux. | Les chats vont dormir sur le tapis doux.
+[TIER_3] | vont | Nous ___ chercher nos cartables bleus. | Nous vont chercher nos cartables bleus.
+[TIER_3] | oui | Tu veux un bonbon? ___, s'il te plaît. | Tu veux un bonbon?, oui, s'il te plaît.
+[TIER_3] | oui | C'est ton chat? ___, il est très doux. | C'est ton chat?, oui, il est très doux.
+[TIER_3] | oui | Tu as fini ton dessin? ___, regarde. | Tu as fini ton dessin?, oui, regarde.
+[TIER_3] | oui | Le livre est bleu? ___, tout à fait. | Le livre est bleu?, oui, tout à fait.
+[TIER_3] | oui | Tu aimes l'école? ___, beaucoup ! | Tu aimes l'école?, oui, beaucoup !
+[TIER_3] | que | Le chat ___ dort est très calme. | Le chat que dort est très calme.
+[TIER_3] | que | Regarde le beau dessin ___ j'ai fait. | Regarde le beau dessin que j'ai fait.
+[TIER_3] | que | C'est l'oiseau ___ chante dans l'arbre. | C'est l'oiseau que chante dans l'arbre.
+[TIER_3] | que | Le livre ___ tu lis est très intéressant. | Le livre que tu lis est très intéressant.
+[TIER_3] | que | Je sais ___ tu aimes le chocolat. | Je sais que tu aimes le chocolat.
+[TIER_3] | du | Le chat boit ___ lait frais dans un bol. | Le chat boit du lait frais dans un bol.
+[TIER_3] | du | Il y a ___ pain sur la table ronde. | Il y a du pain sur la table ronde.
+[TIER_3] | du | Je mange ___ chocolat après le repas. | Je mange du chocolat après le repas.
+[TIER_3] | du | Le soleil brille avec ___ beau temps. | Le soleil brille avec du beau temps.
+[TIER_3] | du | Mets ___ beurre sur ta tartine dorée. | Mets du beurre sur ta tartine dorée.
+[TIER_3] | donc | Tu as faim, ___ mange une pomme rouge. | Tu as faim, donc mange une pomme rouge.
+[TIER_3] | donc | Le chat est fatigué, ___ il dort. | Le chat est fatigué, donc il dort.
+[TIER_3] | donc | C'est l'heure, rangeons ___ nos livres. | C'est l'heure, rangeons donc nos livres.
+[TIER_3] | donc | Tu veux jouer? Viens ___ avec nous. | Tu veux jouer? Viens donc avec nous.
+[TIER_3] | donc | Il pleut, mets ___ ton manteau bleu. | Il pleut, mets donc ton manteau bleu.
+[TIER_3] | près | Le chat dort ___ la grande fenêtre. | Le chat dort près la grande fenêtre.
+[TIER_3] | près | Mon cartable est ___ de la porte. | Mon cartable est près de la porte.
+[TIER_3] | près | Assieds-toi ___ moi sur le banc. | Assieds-toi près moi sur le banc.
+[TIER_3] | près | L'arbre est ___ de la maison rouge. | L'arbre est près de la maison rouge.
+[TIER_3] | près | Le chien joue ___ sa niche en bois. | Le chien joue près sa niche en bois.
+[TIER_3] | tout | Le chat dort ___ l'après-midi au soleil. | Le chat dort tout l'après-midi au soleil.
+[TIER_3] | tout | J'ai mangé ___ le chocolat de la boîte. | J'ai mangé tout le chocolat de la boîte.
+[TIER_3] | tout | Les élèves écoutent ___ en silence. | Les élèves écoutent tout en silence.
+[TIER_3] | tout | ___ le monde joue dans la cour. | Tout le monde joue dans la cour.
+[TIER_3] | tout | Le livre est ___ bleu et très propre. | Le livre est tout bleu et très propre.
+[TIER_3] | venu | Le chat est ___ s'asseoir sur mes genoux. | Le chat est venu s'asseoir sur mes genoux.
+[TIER_3] | venu | Un petit oiseau est ___ sur la branche. | Un petit oiseau est venu sur la branche.
+[TIER_3] | venu | Mon ami est ___ jouer avec moi. | Mon ami est venu jouer avec moi.
+[TIER_3] | venu | Le facteur est ___ déposer une lettre. | Le facteur est venu déposer une lettre.
+[TIER_3] | venu | Tu es ___ trop tôt ce matin. | Tu es venu trop tôt ce matin.
+[TIER_3] | allé | Le chat est ___ se cacher sous le lit. | Le chat est allé se cacher sous le lit.
+[TIER_3] | allé | Paul est ___ jouer dans le grand parc. | Paul est allé jouer dans le grand parc.
+[TIER_3] | allé | La maîtresse est ___ chercher des livres. | La maîtresse est allé chercher des livres.
+[TIER_3] | allé | Nous sommes ___ voir les animaux. | Nous sommes allé voir les animaux.
+[TIER_3] | allé | Le petit garçon est ___ à l'école. | Le petit garçon est allé à l'école.
+[TIER_4] | quoi | Tu penses à ___ en regardant le ciel? | Tu penses à quoi en regardant le ciel?
+[TIER_4] | quoi | Dis-moi ___ tu veux pour ton goûter. | Dis-moi quoi tu veux pour ton goûter.
+[TIER_4] | quoi | Avec ___ est fait ce beau dessin? | Avec quoi est fait ce beau dessin?
+[TIER_4] | quoi | Tu cherches ___ dans ta trousse bleue? | Tu cherches quoi dans ta trousse bleue?
+[TIER_4] | quoi | De ___ parles-tu avec ton ami Paul? | De quoi parles-tu avec ton ami Paul?
+[TIER_4] | très | Le chaton noir est ___ doux et mignon. | Le chaton noir est très doux et mignon.
+[TIER_4] | très | J'ai ___ faim à l'heure du déjeuner. | J'ai très faim à l'heure du déjeuner.
+[TIER_4] | très | La pomme rouge est ___ sucrée et bonne. | La pomme rouge est très sucrée et bonne.
+[TIER_4] | très | Ce livre d'histoires est ___ amusant. | Ce livre d'histoires est très amusant.
+[TIER_4] | très | Le petit garçon court ___ vite. | Le petit garçon court très vite.
+[TIER_4] | notre | ___ classe de français est grande et claire. | Notre classe de français est grande et claire.
+[TIER_4] | notre | Le chat gris est la mascotte de ___ école. | Le chat gris est la mascotte de notre école.
+[TIER_4] | notre | Regarde ___ beau dessin sur le tableau. | Regarde notre beau dessin sur le tableau.
+[TIER_4] | notre | ___ maître lit une belle histoire. | Notre maître lit une belle histoire.
+[TIER_4] | notre | Nous rangeons ___ livres dans le meuble. | Nous rangeons notre livres dans le meuble.
+[TIER_4] | s'approche | Le chat ___ doucement de la petite souris. | Le chat s'approche doucement de la petite souris.
+[TIER_4] | s'approche | Le chien ___ de sa gamelle de lait. | Le chien s'approche de sa gamelle de lait.
+[TIER_4] | s'approche | Un ami ___ de nous dans la cour. | Un ami s'approche de nous dans la cour.
+[TIER_4] | s'approche | L'oiseau ___ de la miette de pain. | L'oiseau s'approche de la miette de pain.
+[TIER_4] | s'approche | Le maître ___ du tableau noir pour écrire. | Le maître s'approche du tableau noir pour écrire.
+[TIER_4] | j'ai | ___ un beau cartable rouge et bleu. | J'ai un beau cartable rouge et bleu.
+[TIER_4] | j'ai | ___ faim, je veux une pomme rouge. | J'ai faim, je veux une pomme rouge.
+[TIER_4] | j'ai | ___ trouvé un petit chaton dans le jardin. | J'ai trouvé un petit chaton dans le jardin.
+[TIER_4] | j'ai | ___ oublié mon crayon vert à la maison. | J'ai oublié mon crayon vert à la maison.
+[TIER_4] | j'ai | ___ un ami qui s'appelle Paul. | J'ai un ami qui s'appelle Paul.
+[TIER_4] | mais | Le chat veut sortir, ___ la porte est fermée. | Le chat veut sortir, mais la porte est fermée.
+[TIER_4] | mais | J'ai un crayon bleu, ___ pas de vert. | J'ai un crayon bleu, mais pas de vert.
+[TIER_4] | mais | Il fait froid, ___ le soleil brille. | Il fait froid, mais le soleil brille.
+[TIER_4] | mais | Le chien est grand, ___ très gentil. | Le chien est grand, mais très gentil.
+[TIER_4] | mais | Je cherche mon livre, ___ je ne le vois pas. | Je cherche mon livre, mais je ne le vois pas.
+[TIER_4] | sans | Le chat marche ___ faire de bruit. | Le chat marche sans faire de bruit.
+[TIER_4] | sans | Je bois mon chocolat ___ sucre. | Je bois mon chocolat sans sucre.
+[TIER_4] | sans | L'élève dessine ___ utiliser de règle. | L'élève dessine sans utiliser de règle.
+[TIER_4] | sans | Ne sors pas ___ ton manteau bleu. | Ne sors pas sans ton manteau bleu.
+[TIER_4] | sans | Il écrit son nom ___ se tromper. | Il écrit son nom sans se tromper.
+[TIER_4] | bien | Le chat dort ___ sur le tapis doux. | Le chat dort bien sur le tapis doux.
+[TIER_4] | bien | Tu as ___ fait ton dessin de fleurs. | Tu as bien fait ton dessin de fleurs.
+[TIER_4] | bien | Je connais ___ mon ami Paul. | Je connais bien mon ami Paul.
+[TIER_4] | bien | La soupe chaude est ___ préparée. | La soupe chaude est bien préparée.
+[TIER_4] | bien | Écoute ___ la maîtresse parler. | Écoute bien la maîtresse parler.
+[TIER_4] | par | Le chat regarde ___ la petite fenêtre. | Le chat regarde par la petite fenêtre.
+[TIER_4] | par | Le livre est lu ___ la maîtresse. | Le livre est lu par la maîtresse.
+[TIER_4] | par | Entre ___ la porte de la classe. | Entre par la porte de la classe.
+[TIER_4] | par | Le soleil brille ___ une belle journée. | Le soleil brille par une belle journée.
+[TIER_4] | par | L'oiseau passe ___ dessus le grand mur. | L'oiseau passe par dessus le grand mur.
+[TIER_4] | donne | ___ -moi ton crayon vert, s'il te plaît. | Donne -moi ton crayon vert, s'il te plaît.
+[TIER_4] | donne | La maman ___ un bonbon à son enfant. | La maman donne un bonbon à son enfant.
+[TIER_4] | donne | Paul ___ une pomme rouge à son ami. | Paul donne une pomme rouge à son ami.
+[TIER_4] | donne | Le maître ___ un livre à chaque élève. | Le maître donne un livre à chaque élève.
+[TIER_4] | donne | ___ un câlin à ton petit chaton. | Donne un câlin à ton petit chaton.
+[TIER_4] | le | ___ chat noir dort sur le tapis doux. | Le chat noir dort sur le tapis doux.
+[TIER_4] | le | Regarde ___ petit oiseau dans l'arbre. | Regarde le petit oiseau dans l'arbre.
+[TIER_4] | le | Prends ___ livre rouge sur la table. | Prends le livre rouge sur la table.
+[TIER_4] | le | Paul aime ___ chocolat et les bonbons. | Paul aime le chocolat et les bonbons.
+[TIER_4] | le | Ouvre ___ grand cahier bleu pour écrire. | Ouvre le grand cahier bleu pour écrire.
+[TIER_4] | beau | Regarde ___ papillon jaune sur la fleur. | Regarde beau papillon jaune sur la fleur.
+[TIER_4] | beau | C'est un ___ dessin fait par Marie. | C'est un beau dessin fait par Marie.
+[TIER_4] | beau | Le chat a un ___ collier rouge. | Le chat a un beau collier rouge.
+[TIER_4] | beau | Nous avons un ___ jardin plein d'arbres. | Nous avons un beau jardin plein d'arbres.
+[TIER_4] | beau | Quel ___ soleil brille dans le ciel! | Quel beau soleil brille dans le ciel!
+[TIER_4] | leur | Les élèves rangent ___ livres bleus. | Les élèves rangent leur livres bleus.
+[TIER_4] | leur | Le chat donne ___ repas aux chatons. | Le chat donne leur repas aux chatons.
+[TIER_4] | leur | Les enfants jouent avec ___ amis. | Les enfants jouent avec leur amis.
+[TIER_4] | leur | Dis bonjour à ___ maîtresse d'école. | Dis bonjour à leur maîtresse d'école.
+[TIER_4] | leur | Le chien garde ___ maison en bois. | Le chien garde leur maison en bois.
+[TIER_4] | vite | Le chat court ___ après la souris. | Le chat court vite après la souris.
+[TIER_4] | vite | Dépêche-toi, rentrons ___ en classe. | Dépêche-toi, rentrons vite en classe.
+[TIER_4] | vite | La voiture rouge roule très ___. | La voiture rouge roule très vite.
+[TIER_4] | vite | Ramasse ton crayon ___ avant la cloche. | Ramasse ton crayon vite avant la cloche.
+[TIER_4] | vite | L'oiseau s'envole ___ dans le ciel bleu. | L'oiseau s'envole vite dans le ciel bleu.
+[TIER_4] | jusqu'à | Marche ___ la grande porte rouge. | Marche jusqu'à la grande porte rouge.
+[TIER_4] | jusqu'à | Le chat court ___ l'arbre vert. | Le chat court jusqu'à l'arbre vert.
+[TIER_4] | jusqu'à | Nous lisons l'histoire ___ la fin. | Nous lisons l'histoire jusqu'à la fin.
+[TIER_4] | jusqu'à | Compte ___ dix avec tes doigts. | Compte jusqu'à dix avec tes doigts.
+[TIER_4] | jusqu'à | Reste assis ___ l'arrivée du maître. | Reste assis jusqu'l'arrivée du maître.
+[TIER_4] | mère | La ___ prépare un bon repas chaud. | La mère prépare un bon repas chaud.
+[TIER_4] | mère | Le petit garçon fait un câlin à sa ___. | Le petit garçon fait un câlin à sa mère.
+[TIER_4] | mère | La ___ lit une belle histoire le soir. | La mère lit une belle histoire le soir.
+[TIER_4] | mère | Donne la main à ta ___ pour traverser. | Donne la main à ta mère pour traverser.
+[TIER_4] | mère | La chatte est la ___ des petits chatons. | La chatte est la mère des petits chatons.
+[TIER_4] | sont | Les chats ___ blottis sur le tapis. | Les chats sont blottis sur le tapis.
+[TIER_4] | sont | Mes crayons de couleur ___ dans la trousse. | Mes crayons de couleur sont dans la trousse.
+[TIER_4] | sont | Les livres rouges ___ sur la table. | Les livres rouges sont sur la table.
+[TIER_4] | sont | Les élèves ___ assis en rang sagement. | Les élèves sont assis en rang sagement.
+[TIER_4] | sont | Les belles fleurs ___ dans le jardin. | Les belles fleurs sont dans le jardin.
+[TIER_4] | quel | ___ beau dessin tu as fait, Paul ! | Quel beau dessin tu as fait, Paul !
+[TIER_4] | quel | ___ livre veux-tu lire aujourd'hui ? | Quel livre veux-tu lire aujourd'hui ?
+[TIER_4] | quel | À ___ jeu veux-tu jouer à la récré ? | À quel jeu veux-tu jouer à la récré ?
+[TIER_4] | quel | ___ temps fait-il dans la cour ? | Quel temps fait-il dans la cour ?
+[TIER_4] | quel | Dis-moi ___ est ton animal préféré. | Dis-moi quel est ton animal préféré.
+[TIER_4] | reste | Le chat ___ calme sur le tapis doux. | Le chat reste calme sur le tapis doux.
+[TIER_4] | reste | ___ assis à ta place pendant la classe. | Reste assis à ta place pendant la classe.
+[TIER_4] | reste | Un peu de chocolat ___ dans la boîte. | Un peu de chocolat reste dans la boîte.
+[TIER_4] | reste | Le petit garçon ___ avec sa maman. | Le petit garçon reste avec sa maman.
+[TIER_4] | reste | L'oiseau ___ sur la branche de l'arbre. | L'oiseau reste sur la branche de l'arbre.
+[TIER_4] | où | ___ est mon crayon vert s'il te plaît ? | Où est mon crayon vert s'il te plaît ?
+[TIER_4] | où | Regarde ___ le chat se cache pour dormir. | Regarde où le chat se cache pour dormir.
+[TIER_4] | où | Sais-tu ___ est rangé le grand livre ? | Sais-tu où est rangé le grand livre ?
+[TIER_4] | où | Dis-moi ___ tu as trouvé ce coquillage. | Dis-moi où tu as trouvé ce coquillage.
+[TIER_4] | où | La maison ___ j'habite est très jolie. | La maison où j'habite est très jolie.
+[TIER_4] | fait | Le maître ___ un dessin sur le tableau. | Le maître fait un dessin sur le tableau.
+[TIER_4] | fait | Paul ___ un château avec du sable fin. | Paul fait un château avec du sable fin.
+[TIER_4] | fait | Il ___ très beau dans la cour d'école. | Il fait très beau dans la cour d'école.
+[TIER_4] | fait | Le chat ___ sa toilette avec sa patte. | Le chat fait sa toilette avec sa patte.
+[TIER_4] | fait | Regarde le beau travail que tu as ___. | Regarde le beau travail que tu as fait.
+[TIER_4] | chez | Je vais ___ mon amie Marie après l'école. | Je vais chez mon amie Marie après l'école.
+[TIER_4] | chez | Le chat rentre ___ lui pour dormir. | Le chat rentre chez lui pour dormir.
+[TIER_4] | chez | Nous mangeons un bon gâteau ___ nous. | Nous mangeons un bon gâteau chez nous.
+[TIER_4] | chez | Paul oublie son cartable ___ son ami. | Paul oublie son cartable chez son ami.
+[TIER_4] | chez | La maman prépare le dîner ___ elle. | La maman prépare le dîner chez elle.
+[TIER_4] | quand | ___ le chat dort, la souris danse. | Quand le chat dort, la souris danse.
+[TIER_4] | quand | ___ viens-tu jouer au ballon avec moi ? | Quand viens-tu jouer au ballon avec moi ?
+[TIER_4] | quand | Le maître sourit ___ l'élève répond bien. | Le maître sourit quand l'élève répond bien.
+[TIER_4] | quand | ___ est-ce la récréation en classe ? | Quand est-ce la récréation en classe ?
+[TIER_4] | quand | Range tes livres ___ tu as fini ton travail. | Range tes livres quand tu as fini ton travail.
+[TIER_4] | elle | La petite fille sourit, ___ est contente. | La petite fille sourit, elle est contente.
+[TIER_4] | elle | Regarde Marie, ___ dessine une fleur bleue. | Regarde Marie, elle dessine une fleur bleue.
+[TIER_4] | elle | La chatte cherche ___ petit chaton gris. | La chatte cherche elle petit chaton gris.
+[TIER_4] | elle | Maman prépare le goûter, ___ est gentille. | Maman prépare le goûter, elle est gentille.
+[TIER_4] | elle | Ma sœur lit un livre, ___ aime les histoires. | Ma sœur lit un livre, elle aime les histoires.
+[TIER_4] | fille | La petite ___ dessine une jolie fleur. | La petite fille dessine une jolie fleur.
+[TIER_4] | fille | Une gentille ___ prête son crayon rouge. | Une gentille fille prête son crayon rouge.
+[TIER_4] | fille | Marie est une ___ de première année. | Marie est une fille de première année.
+[TIER_4] | fille | La ___ aux cheveux bouclés sourit. | La fille aux cheveux bouclés sourit.
+[TIER_4] | fille | C'est une belle histoire sur une petite ___. | C'est une belle histoire sur une petite fille.

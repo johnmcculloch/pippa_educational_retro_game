@@ -8,24 +8,25 @@ import hashlib
 import threading
 import shutil
 import subprocess
-from characters import load_character_sprite
+
+from characters import CHARACTERS, CHARACTER_KEYS, load_character_sprite
 from gameplay_parameters import LEVELS, load_mazes
 from scene_compare import CompareScene
+from scene_french_words import FrenchWordContextScene
+from scene_addition_carryover import AdditionCarryoverScene
 
 pygame.init()
 pygame.font.init()
 
-# Controller hardware initialization
 pygame.event.pump()
 pygame.joystick.init()
 pygame.event.pump()
 
 WIDTH, HEIGHT = 900, 650
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Pippa & Marryo: Math Quest")
+pygame.display.set_caption("Pippa & Marryo: Educational Quest")
 clock = pygame.time.Clock()
 
-# Color Palette
 BG_COLOR = (24, 26, 36)
 COLOR_WALL = (45, 52, 70)
 COLOR_TEXT_DIM = (100, 110, 135)
@@ -35,9 +36,9 @@ COLOR_TARGET = (129, 140, 248)
 COLOR_FEEDBACK = (239, 68, 68)
 COLOR_SUCCESS = (34, 197, 94)
 
-COLOR_FR_SCHOOL = (37, 99, 235)    # French Blue
-COLOR_EN_SCHOOL = (225, 29, 72)    # English Crimson
-COLOR_SCHOOL_DONE = (75, 85, 105)  # Dimmed graduated building
+COLOR_FR_SCHOOL = (37, 99, 235)
+COLOR_EN_SCHOOL = (225, 29, 72)
+COLOR_SCHOOL_DONE = (75, 85, 105)
 
 COLOR_RUBY = (239, 68, 68)
 COLOR_EMERALD = (16, 185, 129)
@@ -47,7 +48,6 @@ FONT_BIG = pygame.font.Font(None, 84)
 FONT_MED = pygame.font.Font(None, 38)
 FONT_SMALL = pygame.font.Font(None, 24)
 
-# Fallback maze in case mazes.txt is missing
 DEFAULT_MAZE = [
     "##################",
     "# . . . . P . .  #",
@@ -61,9 +61,6 @@ DEFAULT_MAZE = [
     "##################"
 ]
 
-# -------------------------------------------------------------
-# RETRO SOUND SYNTHESIZER
-# -------------------------------------------------------------
 class SoundFX:
     def __init__(self):
         self.enabled = False
@@ -85,9 +82,9 @@ class SoundFX:
         num_samples = int(self.sample_rate * duration_s)
         buf = array.array('h')
         for i in range(num_samples):
-            t = i / self.sample_rate
+            t_val = i / self.sample_rate
             decay = max(0.0, 1.0 - (i / num_samples))
-            val = int(32767 * volume * decay * math.sin(2 * math.pi * freq * t))
+            val = int(32767 * volume * decay * math.sin(2 * math.pi * freq * t_val))
             buf.append(val)
         return buf
 
@@ -128,9 +125,6 @@ class SoundFX:
     def play_level_up(self):
         if self.enabled: self.sfx_channel.play(self.level_sound)
 
-# -------------------------------------------------------------
-# HIGH QUALITY CACHED SPEECH ENGINE
-# -------------------------------------------------------------
 class SmartSpeechEngine:
     def __init__(self):
         self.cache_dir = "voice_cache"
@@ -139,7 +133,6 @@ class SmartSpeechEngine:
         self.has_gtts = False
         self.is_downloading = False
         self.fallback_proc = None
-        
         try:
             import gtts
             self.has_gtts = True
@@ -199,60 +192,29 @@ class SmartSpeechEngine:
     def _system_fallback(self, text, lang):
         try:
             if shutil.which("say"):
-                self.fallback_proc = subprocess.Popen(["say", "-r", "155", text])
+                self.fallback_proc = subprocess.Popen(["say", "-r", "100", text])
             elif shutil.which("espeak"):
                 voice = "fr" if lang == "fr" else "en"
-                self.fallback_proc = subprocess.Popen(["espeak", f"-v{voice}", "-s", "150", text])
+                self.fallback_proc = subprocess.Popen(["espeak", f"-v{voice}", "-s", "90", text])
         except Exception:
             pass
 
-# -------------------------------------------------------------
-# LOCALIZATION (EN / FR)
-# -------------------------------------------------------------
 TRANSLATIONS = {
     "en": {
         "level": "LEVEL {n}",
         "score": "SCORE",
         "enter_school": "Press (A) or SPACE to Enter English School!",
         "school_already_done": "English School is already completed!",
-        "what_is": "What is {a} + {b}?",
-        "what_is_spoken": "What is {a} plus {b}?",
-        "stack_prompt": "Let's stack it in columns to solve it!",
-        "btn_stack": "Press (A) or SPACE to stack columns",
-        "unit_prompt": "First, add the units column to the right!",
-        "btn_start_add": "Press (A) or SPACE to start adding",
-        "carry_prompt": "Walk and push the 1 up to the tens box!",
-        "tens_prompt": "Awesome! Now add the tens column.",
-        "correct": "Correct! {a} + {b} = {ans} (+500 pts)",
-        "correct_spoken": "Correct! {a} plus {b} equals {ans}!",
-        "try_units": "Try again! Add the yellow units column.",
-        "try_tens": "Try again! Add all tens (and carried box).",
-        "class_dismissed": "School Complete! Returning to Maze...",
-        "quota": "Class Goal: {n} sums left",
         "objective_hud": "Gems: {gems} left | Schools: [FR: {fr}] [EN: {en}]",
-        "level2_spoken": "Bravo Pippa! You finished Level 1! Welcome to Level 2!",
+        "level_up_spoken": "Bravo Pippa! You completed the level!",
     },
     "fr": {
         "level": "NIVEAU {n}",
         "score": "SCORE",
         "enter_school": "Appuie sur (A) ou ESPACE pour entrer à l'École !",
         "school_already_done": "L'École française est déjà terminée !",
-        "what_is": "Combien font {a} + {b} ?",
-        "what_is_spoken": "Combien font {a} plus {b} ?",
-        "stack_prompt": "Posons l'addition en colonnes !",
-        "btn_stack": "Appuie sur (A) ou ESPACE pour aligner",
-        "unit_prompt": "D'abord, calcule les unités à la droite!",
-        "btn_start_add": "Appuie sur (A) ou ESPACE pour commencer",
-        "carry_prompt": "Pousse le 1 vers la boîte des dizaines !",
-        "tens_prompt": "Bravo ! Maintenant, calcule les dizaines.",
-        "correct": "Bravo ! {a} + {b} = {ans} (+500 pts)",
-        "correct_spoken": "Bravo ! {a} plus {b} est égal à {ans} !",
-        "try_units": "Essaie encore ! Additionne les unités en jaune.",
-        "try_tens": "Essaie encore ! Additionne toutes les dizaines.",
-        "class_dismissed": "Bravo ! Fin des cours, retour au village...",
-        "quota": "Objectif : encore {n} calculs",
         "objective_hud": "Gemmes : {gems} | Écoles : [FR : {fr}] [EN : {en}]",
-        "level2_spoken": "Bravo Pippa ! Tu as terminé le Niveau 1 ! Bienvenue au Niveau 2 !",
+        "level_up_spoken": "Bravo Pippa ! Tu as terminé le niveau !",
     }
 }
 
@@ -260,26 +222,22 @@ def t(key, lang="en", **kwargs):
     text = TRANSLATIONS.get(lang, TRANSLATIONS["en"]).get(key, key)
     return text.format(**kwargs) if kwargs else text
 
-# -------------------------------------------------------------
-# GAME DIRECTOR (PERSISTENT STATE & DATA-DRIVEN LEVEL LOADER)
-# -------------------------------------------------------------
 class GameDirector:
     def __init__(self, character_name="pippa"):
         self.score = 0
         self.language = "en"
         self.last_school = "en"
-        # Cross-platform Y-axis polarity compensation
         self.y_mult = -1.0 if sys.platform == "darwin" else 1.0
         self.sfx = SoundFX()
         self.speech = SmartSpeechEngine()
         self.controller = None
-        self.controller_centered = False  # Guard against startup ghost input
+        self.controller_centered = False
         self.init_controller()
-       
+
         self.digit_w, self.digit_h = FONT_BIG.size("1")
         self.math_player_sprite = load_character_sprite(character_name, target_height=self.digit_h)
         self.maze_player_sprite = load_character_sprite(character_name, target_height=34)
-        
+
         try:
             self.mazes = load_mazes("mazes.txt")
         except Exception as e:
@@ -289,21 +247,12 @@ class GameDirector:
         self.current_level = 1
         self.maze_scene = None
         self.classroom_scene = None
-        
-        # Launch into the retro title screen first
         self.active_scene = StartScene(self)
 
     def set_character(self, character_name):
         self.character_name = character_name
-        # Reload sprites according to the new character
         self.math_player_sprite = load_character_sprite(character_name, target_height=self.digit_h)
         self.maze_player_sprite = load_character_sprite(character_name, target_height=34)
-        # Transition into the first level
-        self.load_level(self.current_level)
-
-    def start_game(self):
-        """Called when player presses Start/Space on the title screen."""
-        self.sfx.play_gem()
         self.load_level(self.current_level)
 
     def init_controller(self):
@@ -323,23 +272,28 @@ class GameDirector:
 
     def load_level(self, level_num):
         self.current_level = level_num
-        self.school_en_done = False
-        self.school_fr_done = False
-
         cfg = LEVELS.get(level_num)
         if not cfg:
-            self.active_scene = Level2Scene(self)
+            self.active_scene = VictoryScene(self)
             return
 
         maze_id = cfg.get("maze_id", "MAZE_A")
         layout = self.mazes.get(maze_id, DEFAULT_MAZE)
+
+        # Check which schools actually exist in this maze layout
+        has_fr = any("F" in row for row in layout)
+        has_en = any("E" in row for row in layout)
+
+        # If a school is not in the maze, mark it as done so it doesn't block level progression
+        self.school_fr_done = not has_fr
+        self.school_en_done = not has_en
+
         self.maze_scene = MazeScene(self, layout)
         self.classroom_scene = None
         self.active_scene = self.maze_scene
 
     def get_movement_vector(self, speed=5):
         move_x, move_y = 0.0, 0.0
-
         if self.controller:
             lx = self.controller.get_axis(0)
             ly = self.y_mult * self.controller.get_axis(1)
@@ -353,7 +307,6 @@ class GameDirector:
                 rx = self.controller.get_axis(3)
                 ry = self.y_mult * self.controller.get_axis(4)
 
-            # Wait until the controller reports a genuine neutral position before applying input
             if not self.controller_centered:
                 if abs(lx) < 0.2 and abs(ly) < 0.2 and abs(rx) < 0.2 and abs(ry) < 0.2:
                     self.controller_centered = True
@@ -362,7 +315,6 @@ class GameDirector:
 
             l_mag = abs(lx) + abs(ly)
             r_mag = abs(rx) + abs(ry)
-
             if r_mag > l_mag and r_mag > 0.2:
                 move_x += rx * speed
                 move_y += ry * speed
@@ -371,21 +323,15 @@ class GameDirector:
                 move_y += ly * speed
 
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_LEFT] or keys[pygame.K_a]:
-            move_x = -speed
-        if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
-            move_x = speed
-        if keys[pygame.K_UP] or keys[pygame.K_w]:
-            move_y = -speed
-        if keys[pygame.K_DOWN] or keys[pygame.K_s]:
-            move_y = speed
-
+        if keys[pygame.K_LEFT] or keys[pygame.K_a]: move_x = -speed
+        if keys[pygame.K_RIGHT] or keys[pygame.K_d]: move_x = speed
+        if keys[pygame.K_UP] or keys[pygame.K_w]: move_y = -speed
+        if keys[pygame.K_DOWN] or keys[pygame.K_s]: move_y = speed
         return move_x, move_y
 
     def get_stick_vertical(self):
         if not self.controller or not self.controller_centered:
             return 0.0
-
         ly = self.y_mult * self.controller.get_axis(1)
         ry = 0.0
         num_axes = self.controller.get_numaxes()
@@ -393,26 +339,31 @@ class GameDirector:
             ry = self.y_mult * self.controller.get_axis(3)
         elif num_axes >= 5:
             ry = self.y_mult * self.controller.get_axis(4)
-
-        if abs(ry) > abs(ly):
-            return ry
-        return ly
+        return ry if abs(ry) > abs(ly) else ly
 
     def enter_school(self, language="en"):
         self.speech.stop()
         self.language = language
         self.last_school = language
-        
-        cfg = LEVELS.get(self.current_level, LEVELS[1])
+
+        cfg = LEVELS.get(self.current_level, LEVELS.get(1, {}))
         quota = cfg.get("challenges_per_school", 4)
-        scene_type = cfg.get("scene_type", "classroom")
-        
-        if scene_type == "compare":
+        scene_type = cfg.get("scene_type", "addition")
+
+        # Routing to modular scenes
+        if scene_type in ("addition", "classroom"):
+            r1 = cfg.get("num1_range", (10, 19))
+            r2 = cfg.get("num2_range", (4, 19))
+            self.classroom_scene = AdditionCarryoverScene(
+                self, total_challenges=quota, language=language, num1_range=r1, num2_range=r2
+            )
+        elif scene_type == "compare":
             mode = cfg.get("compare_mode", "adjust_number")
             self.classroom_scene = CompareScene(self, total_challenges=quota, language=language, mode=mode)
-        else:
-            self.classroom_scene = ClassroomScene(self, total_challenges=quota)
-            
+        elif scene_type in ("french_words", "words"):
+            tiers = cfg.get("tiers", ["TIER_1"])
+            self.classroom_scene = FrenchWordContextScene(self, total_challenges=quota, tier=tiers)
+
         self.active_scene = self.classroom_scene
 
     def exit_school(self):
@@ -423,36 +374,28 @@ class GameDirector:
             self.school_en_done = True
 
         if self.school_fr_done and self.school_en_done and len(self.maze_scene.gems) == 0:
-            self.advance_to_level_2()
+            self.advance_to_next_level()
         else:
             self.maze_scene.reset_after_school(self.last_school)
             self.active_scene = self.maze_scene
 
-    def advance_to_level_2(self):
+    def advance_to_next_level(self):
         self.speech.stop()
         self.sfx.play_level_up()
         next_level = self.current_level + 1
         if next_level in LEVELS:
             self.load_level(next_level)
         else:
-            self.current_level = 2
-            self.active_scene = Level2Scene(self)
-
-# -------------------------------------------------------------
-# START SCENE: TITLE / SPLASH SCREEN
-# -------------------------------------------------------------
-from characters import CHARACTERS, CHARACTER_KEYS, load_character_sprite
+            self.active_scene = VictoryScene(self)
 
 class CharacterSelectScene:
     def __init__(self, director):
         self.director = director
         self.selected_idx = 0
-        # Pre-cache preview cards and sprites (120px tall for preview)
         self.previews = {k: load_character_sprite(k, target_height=120) for k in CHARACTER_KEYS}
         self.pulse = 0
 
     def handle_event(self, event):
-        # Navigation: Left / Right
         if event.type == pygame.KEYDOWN:
             if event.key in (pygame.K_LEFT, pygame.K_a):
                 self.selected_idx = (self.selected_idx - 1) % len(CHARACTER_KEYS)
@@ -462,20 +405,16 @@ class CharacterSelectScene:
                 self.director.sfx.play_gem()
             elif event.key in (pygame.K_SPACE, pygame.K_RETURN, pygame.K_KP_ENTER):
                 self.confirm_selection()
-
         elif event.type == pygame.JOYBUTTONDOWN:
-            if event.button in (0, 1, 6, 7):  # A / Start
+            if event.button in (0, 1, 6, 7):
                 self.confirm_selection()
-
-        elif event.type == pygame.JOYAXISMOTION:
-            # Simple stick flick support
-            if event.axis == 0:
-                if event.value < -0.6:
-                    self.selected_idx = (self.selected_idx - 1) % len(CHARACTER_KEYS)
-                    self.director.sfx.play_gem()
-                elif event.value > 0.6:
-                    self.selected_idx = (self.selected_idx + 1) % len(CHARACTER_KEYS)
-                    self.director.sfx.play_gem()
+        elif event.type == pygame.JOYAXISMOTION and event.axis == 0:
+            if event.value < -0.6:
+                self.selected_idx = (self.selected_idx - 1) % len(CHARACTER_KEYS)
+                self.director.sfx.play_gem()
+            elif event.value > 0.6:
+                self.selected_idx = (self.selected_idx + 1) % len(CHARACTER_KEYS)
+                self.director.sfx.play_gem()
 
     def confirm_selection(self):
         chosen_key = CHARACTER_KEYS[self.selected_idx]
@@ -487,15 +426,12 @@ class CharacterSelectScene:
 
     def draw(self, surface):
         surface.fill(BG_COLOR)
-
-        # Header Title
         title = FONT_BIG.render("CHOOSE YOUR HERO", True, COLOR_ACCENT)
         surface.blit(title, title.get_rect(center=(WIDTH // 2, 70)))
 
         hint = FONT_SMALL.render("Use Left / Right (Stick/Arrows) and Press (A) or SPACE to Select", True, COLOR_TEXT_DIM)
         surface.blit(hint, hint.get_rect(center=(WIDTH // 2, 115)))
 
-        # Character Cards layout
         card_w, card_h = 180, 260
         spacing = 30
         total_width = len(CHARACTER_KEYS) * card_w + (len(CHARACTER_KEYS) - 1) * spacing
@@ -507,40 +443,29 @@ class CharacterSelectScene:
             card_rect = pygame.Rect(x, card_y, card_w, card_h)
             is_active = (idx == self.selected_idx)
 
-            # Card background and border highlight
             bg_col = (35, 40, 56) if is_active else (25, 28, 40)
             border_col = COLOR_ACCENT if is_active else (50, 58, 78)
-            border_width = 3 if is_active else 1
-
             pygame.draw.rect(surface, bg_col, card_rect, border_radius=8)
-            pygame.draw.rect(surface, border_col, card_rect, width=border_width, border_radius=8)
+            pygame.draw.rect(surface, border_col, card_rect, width=(3 if is_active else 1), border_radius=8)
 
-            # Draw Character Sprite
             sprite = self.previews[key]
             spr_rect = sprite.get_rect(center=(card_rect.centerx, card_rect.y + 110))
-            # Subtle floating bounce for selected character
             if is_active:
                 spr_rect.y += int(3 * math.sin(self.pulse * 0.1))
             surface.blit(sprite, spr_rect)
 
-            # Character Name
             info = CHARACTERS[key]
-            name_col = COLOR_TEXT_LIT if is_active else COLOR_TEXT_DIM
-            name_txt = FONT_MED.render(info["name"], True, name_col)
+            name_txt = FONT_MED.render(info["name"], True, COLOR_TEXT_LIT if is_active else COLOR_TEXT_DIM)
             surface.blit(name_txt, name_txt.get_rect(center=(card_rect.centerx, card_rect.bottom - 45)))
 
             role_txt = FONT_SMALL.render(info["title"], True, COLOR_TARGET if is_active else COLOR_TEXT_DIM)
             surface.blit(role_txt, role_txt.get_rect(center=(card_rect.centerx, card_rect.bottom - 20)))
 
-        # Selected Character Detail Panel at Bottom
-        selected_key = CHARACTER_KEYS[self.selected_idx]
-        sel_info = CHARACTERS[selected_key]
+        sel_info = CHARACTERS[CHARACTER_KEYS[self.selected_idx]]
         desc = sel_info.get(f"desc_{self.director.language}", sel_info["desc_en"])
-        
         detail_rect = pygame.Rect(100, 440, WIDTH - 200, 90)
         pygame.draw.rect(surface, (18, 20, 30), detail_rect, border_radius=8)
         pygame.draw.rect(surface, (45, 52, 70), detail_rect, width=1, border_radius=8)
-
         desc_txt = FONT_SMALL.render(desc, True, COLOR_TEXT_LIT)
         surface.blit(desc_txt, desc_txt.get_rect(center=detail_rect.center))
 
@@ -549,8 +474,6 @@ class StartScene:
         self.director = director
         self.blink_timer = 0
         self.show_prompt = True
-
-        # Robust relative path anchored to this script file
         base_dir = os.path.dirname(os.path.abspath(__file__))
         title_img_path = os.path.join(base_dir, "assets", "title_screen.png")
 
@@ -558,11 +481,9 @@ class StartScene:
             try:
                 loaded_img = pygame.image.load(title_img_path).convert_alpha()
                 self.title_image = pygame.transform.scale(loaded_img, (WIDTH, HEIGHT))
-            except Exception as e:
-                print(f"Warning: Could not load title image: {e}")
+            except Exception:
                 self.title_image = None
         else:
-            print(f"Notice: No title image at '{title_img_path}'. Using retro procedural fallback.")
             self.title_image = None
 
     def handle_event(self, event):
@@ -580,37 +501,26 @@ class StartScene:
         if self.title_image:
             surface.blit(self.title_image, (0, 0))
         else:
-            # Fallback if title_screen.png is absent
             surface.fill((15, 15, 25))
-            
-            title_txt = FONT_BIG.render("PIPPA & MARRYO", True, COLOR_ACCENT)
-            sub_txt = FONT_MED.render("Math Quest", True, (59, 130, 246))
-            surface.blit(title_txt, title_txt.get_rect(center=(WIDTH // 2, HEIGHT // 3)))
-            surface.blit(sub_txt, sub_txt.get_rect(center=(WIDTH // 2, HEIGHT // 3 + 60)))
+            t1 = FONT_BIG.render("PIPPA & FRIENDS", True, COLOR_ACCENT)
+            t2 = FONT_MED.render("Educational Quest", True, (59, 130, 246))
+            surface.blit(t1, t1.get_rect(center=(WIDTH // 2, HEIGHT // 3)))
+            surface.blit(t2, t2.get_rect(center=(WIDTH // 2, HEIGHT // 3 + 60)))
 
-            sprite_rect = self.director.math_player_sprite.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 30))
-            surface.blit(self.director.math_player_sprite, sprite_rect)
-
-        # Blinking 8-bit prompt
         if self.show_prompt:
             prompt_surf = FONT_MED.render("PRESS START OR SPACE", True, COLOR_TEXT_LIT)
             surface.blit(prompt_surf, prompt_surf.get_rect(center=(WIDTH // 2, HEIGHT - 70)))
 
-# -------------------------------------------------------------
-# SCENE 1: THE MAZE / OVERWORLD (DATA-DRIVEN)
-# -------------------------------------------------------------
 class MazeScene:
     def __init__(self, director, layout=None):
         self.director = director
         self.tile_size = 50
         self.layout = layout if layout else DEFAULT_MAZE
-        
         self.walls = []
         self.gems = []
         self.school_fr_rect = None
         self.school_en_rect = None
         self.hovered_school = None
-        
         self.player_rect = pygame.Rect(0, 0, 24, 28)
         self.speed = 5
         self.load_map()
@@ -618,8 +528,9 @@ class MazeScene:
     def load_map(self):
         self.walls.clear()
         self.gems.clear()
+        self.school_fr_rect = None
+        self.school_en_rect = None
         gem_colors = [COLOR_RUBY, COLOR_EMERALD, COLOR_DIAMOND]
-        
         for r_idx, row in enumerate(self.layout):
             for c_idx, ch in enumerate(row):
                 x = c_idx * self.tile_size
@@ -639,10 +550,10 @@ class MazeScene:
                     self.player_rect.center = (x + self.tile_size // 2, y + self.tile_size // 2)
 
     def reset_after_school(self, school_lang):
-        if school_lang == "fr":
+        if school_lang == "fr" and self.school_fr_rect:
             self.player_rect.x = self.school_fr_rect.right + 10
             self.player_rect.y = self.school_fr_rect.y + 10
-        else:
+        elif school_lang == "en" and self.school_en_rect:
             self.player_rect.x = self.school_en_rect.left - 35
             self.player_rect.y = self.school_en_rect.y + 10
         self.hovered_school = None
@@ -654,12 +565,12 @@ class MazeScene:
             self.try_enter_school()
 
     def try_enter_school(self):
-        if self.player_rect.colliderect(self.school_fr_rect):
+        if self.school_fr_rect and self.player_rect.colliderect(self.school_fr_rect):
             if not self.director.school_fr_done:
                 self.director.enter_school("fr")
             else:
                 self.director.sfx.play_buzz()
-        elif self.player_rect.colliderect(self.school_en_rect):
+        elif self.school_en_rect and self.player_rect.colliderect(self.school_en_rect):
             if not self.director.school_en_done:
                 self.director.enter_school("en")
             else:
@@ -667,22 +578,19 @@ class MazeScene:
 
     def update(self):
         move_x, move_y = self.director.get_movement_vector(self.speed)
-
-        # X Collision
         self.player_rect.x += int(move_x)
         for wall in self.walls:
             if self.player_rect.colliderect(wall):
                 if move_x > 0: self.player_rect.right = wall.left
                 elif move_x < 0: self.player_rect.left = wall.right
 
-        # Y Collision
         self.player_rect.y += int(move_y)
         for wall in self.walls:
             if self.player_rect.colliderect(wall):
                 if move_y > 0: self.player_rect.bottom = wall.top
                 elif move_y < 0: self.player_rect.top = wall.bottom
 
-        # Cap movement on outer edge of schools
+        # Guard against None when capping against school sides
         if self.school_fr_rect and self.player_rect.colliderect(self.school_fr_rect):
             if self.player_rect.left < self.school_fr_rect.left:
                 self.player_rect.left = self.school_fr_rect.left
@@ -691,28 +599,25 @@ class MazeScene:
             if self.player_rect.right > self.school_en_rect.right:
                 self.player_rect.right = self.school_en_rect.right
 
-        # Perimeter clamp keeping character inside maze boundary
         self.player_rect.left = max(0, self.player_rect.left)
         self.player_rect.right = min(WIDTH, self.player_rect.right)
         self.player_rect.top = max(75, self.player_rect.top)
         self.player_rect.bottom = min(HEIGHT, self.player_rect.bottom)
 
-        # Gem Pickups
         for gem in self.gems[:]:
             if self.player_rect.colliderect(gem["rect"]):
                 self.gems.remove(gem)
                 self.director.score += 5
                 self.director.sfx.play_gem()
-
                 if len(self.gems) == 0 and self.director.school_fr_done and self.director.school_en_done:
-                    self.director.advance_to_level_2()
+                    self.director.advance_to_next_level()
                     return
 
-        # School Proximity Voice Prompt
+        # School proximity check guarded against None
         current_contact = None
-        if self.player_rect.colliderect(self.school_fr_rect):
+        if self.school_fr_rect and self.player_rect.colliderect(self.school_fr_rect):
             current_contact = "fr"
-        elif self.player_rect.colliderect(self.school_en_rect):
+        elif self.school_en_rect and self.player_rect.colliderect(self.school_en_rect):
             current_contact = "en"
 
         if current_contact and current_contact != self.hovered_school:
@@ -725,7 +630,6 @@ class MazeScene:
 
     def draw(self, surface):
         surface.fill(BG_COLOR)
-        
         for wall in self.walls:
             pygame.draw.rect(surface, COLOR_WALL, wall, border_radius=4)
             pygame.draw.rect(surface, (60, 70, 95), wall, width=1, border_radius=4)
@@ -733,390 +637,35 @@ class MazeScene:
         for gem in self.gems:
             pygame.draw.rect(surface, gem["color"], gem["rect"], border_radius=3)
 
-        # French School (Left Door)
-        fr_color = COLOR_SCHOOL_DONE if self.director.school_fr_done else COLOR_FR_SCHOOL
-        pygame.draw.rect(surface, fr_color, self.school_fr_rect, border_radius=6)
-        fr_label = "ECOLE (OK)" if self.director.school_fr_done else "ECOLE (FR)"
-        fr_txt = FONT_SMALL.render(fr_label, True, COLOR_TEXT_LIT)
-        surface.blit(fr_txt, fr_txt.get_rect(center=self.school_fr_rect.center))
+        # French School
+        if self.school_fr_rect:
+            fr_color = COLOR_SCHOOL_DONE if self.director.school_fr_done else COLOR_FR_SCHOOL
+            pygame.draw.rect(surface, fr_color, self.school_fr_rect, border_radius=6)
+            fr_label = "ECOLE (OK)" if self.director.school_fr_done else "ECOLE (FR)"
+            fr_txt = FONT_SMALL.render(fr_label, True, COLOR_TEXT_LIT)
+            surface.blit(fr_txt, fr_txt.get_rect(center=self.school_fr_rect.center))
 
-        # English School (Right Door)
-        en_color = COLOR_SCHOOL_DONE if self.director.school_en_done else COLOR_EN_SCHOOL
-        pygame.draw.rect(surface, en_color, self.school_en_rect, border_radius=6)
-        en_label = "SCHOOL (OK)" if self.director.school_en_done else "SCHOOL (EN)"
-        en_txt = FONT_SMALL.render(en_label, True, COLOR_TEXT_LIT)
-        surface.blit(en_txt, en_txt.get_rect(center=self.school_en_rect.center))
+        # English School
+        if self.school_en_rect:
+            en_color = COLOR_SCHOOL_DONE if self.director.school_en_done else COLOR_EN_SCHOOL
+            pygame.draw.rect(surface, en_color, self.school_en_rect, border_radius=6)
+            en_label = "SCHOOL (OK)" if self.director.school_en_done else "SCHOOL (EN)"
+            en_txt = FONT_SMALL.render(en_label, True, COLOR_TEXT_LIT)
+            surface.blit(en_txt, en_txt.get_rect(center=self.school_en_rect.center))
 
         sprite_rect = self.director.maze_player_sprite.get_rect(center=self.player_rect.center)
         surface.blit(self.director.maze_player_sprite, sprite_rect)
 
-        if self.player_rect.colliderect(self.school_fr_rect):
+        if self.school_fr_rect and self.player_rect.colliderect(self.school_fr_rect):
             msg = t("school_already_done", "fr") if self.director.school_fr_done else t("enter_school", "fr")
             p_surf = FONT_MED.render(msg, True, COLOR_ACCENT if not self.director.school_fr_done else COLOR_TEXT_DIM)
             surface.blit(p_surf, p_surf.get_rect(center=(WIDTH // 2, HEIGHT - 35)))
-        elif self.player_rect.colliderect(self.school_en_rect):
+        elif self.school_en_rect and self.player_rect.colliderect(self.school_en_rect):
             msg = t("school_already_done", "en") if self.director.school_en_done else t("enter_school", "en")
             p_surf = FONT_MED.render(msg, True, COLOR_ACCENT if not self.director.school_en_done else COLOR_TEXT_DIM)
             surface.blit(p_surf, p_surf.get_rect(center=(WIDTH // 2, HEIGHT - 35)))
 
-# -------------------------------------------------------------
-# SCENE 2: CLASSROOM MATH (DATA-DRIVEN DIFFICULTY)
-# -------------------------------------------------------------
-STATE_INTRO_HORIZONTAL = 0
-STATE_INTRO_STACKED = 1
-STATE_GUESS_UNITS = 2
-STATE_CARRY_BLOCK = 3
-STATE_GUESS_TENS = 4
-STATE_SUCCESS = 5
-STATE_DISMISSED = 6
-
-class ClassroomScene:
-    def __init__(self, director, total_challenges=5):
-        self.director = director
-        self.remaining_challenges = total_challenges
-        self.state = STATE_INTRO_HORIZONTAL
-        
-        self.feedback_msg = ""
-        self.feedback_timer = 0
-        self.success_timer = 0
-        self.stick_cooldown = 0
-        self.stick_neutral = True
-        self.tens_started = False
-        
-        self.digit_w = self.director.digit_w
-        self.digit_h = self.director.digit_h
-        self.player_rect = pygame.Rect(150, 450, self.digit_w, self.digit_h)
-        self.speed = 5
-        
-        self.tens_x = 420
-        self.units_x = 490
-        self.row1_y = 170
-        self.row2_y = 250
-        self.answer_y = 355
-        
-        self.tile_w = self.digit_w + 18
-        self.tile_h = self.digit_h + 8
-        self.carry_slot = pygame.Rect(self.tens_x - 14, 75, self.tile_w + 10, self.tile_h + 10)
-        
-        self.carry_block = None
-        self.carry_placed = False
-
-        self.spawn_new_problem()
-
-    def spawn_new_problem(self):
-        cfg = LEVELS.get(self.director.current_level, LEVELS[1])
-        r1 = cfg.get("num1_range", (10, 19))
-        r2 = cfg.get("num2_range", (4, 19))
-
-        self.num1 = random.randint(r1[0], r1[1])
-        self.num2 = random.randint(r2[0], r2[1])
-        
-        self.u1, self.t1 = self.num1 % 10, self.num1 // 10
-        self.u2, self.t2 = self.num2 % 10, self.num2 // 10
-        self.actual_unit_sum = self.u1 + self.u2
-        
-        self.has_tens_column = (self.t1 + self.t2 > 0)
-        self.needs_carry = (self.actual_unit_sum > 9) and self.has_tens_column
-        self.actual_tens_sum = self.t1 + self.t2 + (1 if self.needs_carry else 0)
-        
-        self.unit_guess = 0
-        self.tens_guess = 0
-        self.tens_started = False
-        self.stick_neutral = True
-        self.carry_block = None
-        self.carry_placed = False
-        self.feedback_msg = ""
-        
-        self.player_rect.topleft = (150, 450)
-        self.state = STATE_INTRO_HORIZONTAL
-        
-        lang = self.director.language
-        question_speech = t("what_is_spoken", lang, a=self.num1, b=self.num2)
-        self.director.speech.speak(question_speech, lang=lang)
-
-    def change_guess(self, delta):
-        if self.state == STATE_GUESS_UNITS:
-            self.unit_guess = max(0, min(19, self.unit_guess + delta))
-        elif self.state == STATE_GUESS_TENS:
-            if not self.tens_started:
-                self.tens_started = True
-                self.tens_guess = 1 if delta > 0 else 0
-            else:
-                self.tens_guess = max(0, min(9, self.tens_guess + delta))
-
-    def handle_event(self, event):
-        if (event.type == pygame.JOYBUTTONDOWN and event.button in (0, 1, 7)) or \
-           (event.type == pygame.KEYDOWN and event.key in (pygame.K_RETURN, pygame.K_SPACE, pygame.K_KP_ENTER)):
-            if self.state == STATE_SUCCESS and self.success_timer <= 60:
-                if self.remaining_challenges > 0:
-                    self.spawn_new_problem()
-                else:
-                    self.state = STATE_DISMISSED
-                    self.feedback_msg = t("class_dismissed", self.director.language)
-                    self.director.speech.speak(self.feedback_msg, lang=self.director.language)
-                    self.success_timer = 90
-                return
-            elif self.state == STATE_DISMISSED:
-                self.director.exit_school()
-                return
-            else:
-                self.commit_action()
-                return
-
-        if event.type == pygame.JOYHATMOTION:
-            if event.value[1] == 1: self.change_guess(1)
-            elif event.value[1] == -1: self.change_guess(-1)
-
-        if event.type == pygame.KEYDOWN:
-            if event.key in (pygame.K_UP, pygame.K_w):
-                self.change_guess(1)
-            elif event.key in (pygame.K_DOWN, pygame.K_s):
-                self.change_guess(-1)
-
-    def commit_action(self):
-        lang = self.director.language
-        if self.state == STATE_INTRO_HORIZONTAL:
-            self.state = STATE_INTRO_STACKED
-            self.director.speech.speak(t("unit_prompt", lang), lang=lang)
-
-        elif self.state == STATE_INTRO_STACKED:
-            self.state = STATE_GUESS_UNITS
-
-        elif self.state == STATE_GUESS_UNITS:
-            if self.unit_guess == self.actual_unit_sum:
-                if not self.has_tens_column:
-                    self.award_success()
-                elif self.needs_carry:
-                    spawn_x = self.units_x - 35 - 9
-                    spawn_y = self.answer_y - 4
-                    self.carry_block = pygame.Rect(spawn_x, spawn_y, self.tile_w, self.tile_h)
-                    self.state = STATE_CARRY_BLOCK
-                    self.feedback_msg = t("carry_prompt", lang)
-                    self.director.speech.speak(self.feedback_msg, lang=lang)
-                else:
-                    self.state = STATE_GUESS_TENS
-                    self.tens_started = False
-                    self.stick_neutral = False
-                    self.feedback_msg = ""
-            else:
-                self.director.sfx.play_buzz()
-                self.feedback_msg = t("try_units", lang)
-                self.feedback_timer = 60
-                self.director.speech.speak(self.feedback_msg, lang=lang)
-
-        elif self.state == STATE_GUESS_TENS:
-            if not self.tens_started: return
-            if self.tens_guess == self.actual_tens_sum:
-                self.award_success()
-            else:
-                self.director.sfx.play_buzz()
-                self.feedback_msg = t("try_tens", lang)
-                self.feedback_timer = 60
-                self.director.speech.speak(self.feedback_msg, lang=lang)
-
-    def award_success(self):
-        self.state = STATE_SUCCESS
-        self.director.score += 500
-        self.director.sfx.play_success()
-        self.remaining_challenges -= 1
-        
-        ans = self.num1 + self.num2
-        lang = self.director.language
-        self.feedback_msg = t("correct", lang, a=self.num1, b=self.num2, ans=ans)
-        self.success_timer = 90
-        
-        spoken_ans = t("correct_spoken", lang, a=self.num1, b=self.num2, ans=ans)
-        self.director.speech.speak(spoken_ans, lang=lang)
-
-    def update(self):
-        if self.state == STATE_SUCCESS:
-            self.success_timer -= 1
-            if self.success_timer <= 0 and not self.director.speech.is_busy():
-                if self.remaining_challenges > 0:
-                    self.spawn_new_problem()
-                else:
-                    self.state = STATE_DISMISSED
-                    self.feedback_msg = t("class_dismissed", self.director.language)
-                    self.director.speech.speak(self.feedback_msg, lang=self.director.language)
-                    self.success_timer = 90
-            elif self.success_timer <= -360:
-                if self.remaining_challenges > 0:
-                    self.spawn_new_problem()
-                else:
-                    self.state = STATE_DISMISSED
-                    self.feedback_msg = t("class_dismissed", self.director.language)
-                    self.director.speech.speak(self.feedback_msg, lang=self.director.language)
-                    self.success_timer = 90
-            return
-
-        if self.state == STATE_DISMISSED:
-            self.success_timer -= 1
-            if (self.success_timer <= 0 and not self.director.speech.is_busy()) or self.success_timer <= -300:
-                self.director.exit_school()
-            return
-
-        if self.state in (STATE_INTRO_HORIZONTAL, STATE_INTRO_STACKED):
-            return
-
-        vert = self.director.get_stick_vertical()
-
-        if self.state == STATE_GUESS_UNITS:
-            if self.stick_cooldown > 0:
-                self.stick_cooldown -= 1
-            else:
-                if vert < -0.5:
-                    self.change_guess(1)
-                    self.stick_cooldown = 14
-                elif vert > 0.5:
-                    self.change_guess(-1)
-                    self.stick_cooldown = 14
-
-        elif self.state == STATE_GUESS_TENS:
-            if not self.stick_neutral:
-                if abs(vert) < 0.2: self.stick_neutral = True
-            else:
-                if self.stick_cooldown > 0:
-                    self.stick_cooldown -= 1
-                else:
-                    if vert < -0.5:
-                        self.change_guess(1)
-                        self.stick_cooldown = 14
-                    elif vert > 0.5:
-                        self.change_guess(-1)
-                        self.stick_cooldown = 14
-
-        # Carry Locomotion with screen boundary clamps for the carry block
-        if self.state == STATE_CARRY_BLOCK:
-            move_x, move_y = self.director.get_movement_vector(self.speed)
-
-            new_x = max(0, min(WIDTH - self.player_rect.width, self.player_rect.x + int(move_x)))
-            new_y = max(0, min(HEIGHT - self.player_rect.height, self.player_rect.y + int(move_y)))
-
-            if self.carry_block and not self.carry_placed:
-                future_rect = pygame.Rect(new_x, new_y, self.player_rect.width, self.player_rect.height)
-                if future_rect.colliderect(self.carry_block):
-                    push_dx = new_x - self.player_rect.x
-                    push_dy = new_y - self.player_rect.y
-
-                    target_bx = self.carry_block.x + push_dx
-                    target_by = self.carry_block.y + push_dy
-
-                    min_bx = 60
-                    max_bx = WIDTH - self.carry_block.width - 60
-                    min_by = 70
-                    max_by = HEIGHT - self.carry_block.height - 60
-
-                    clamped_bx = max(min_bx, min(max_bx, target_bx))
-                    clamped_by = max(min_by, min(max_by, target_by))
-
-                    if clamped_bx != target_bx:
-                        if push_dx > 0:
-                            new_x = clamped_bx - self.player_rect.width
-                        elif push_dx < 0:
-                            new_x = clamped_bx + self.carry_block.width
-
-                    if clamped_by != target_by:
-                        if push_dy > 0:
-                            new_y = clamped_by - self.player_rect.height
-                        elif push_dy < 0:
-                            new_y = clamped_by + self.carry_block.height
-
-                    self.carry_block.x = clamped_bx
-                    self.carry_block.y = clamped_by
-
-                    if self.carry_slot.contains(self.carry_block) or self.carry_slot.colliderect(self.carry_block):
-                        self.carry_block.center = self.carry_slot.center
-                        self.carry_placed = True
-                        self.state = STATE_GUESS_TENS
-                        self.tens_started = False
-                        self.stick_neutral = False
-                        self.stick_cooldown = 20
-                        
-                        lang = self.director.language
-                        self.feedback_msg = t("tens_prompt", lang)
-                        self.director.speech.speak(self.feedback_msg, lang=lang)
-                        new_x, new_y = 150, 450
-
-            self.player_rect.x = new_x
-            self.player_rect.y = new_y
-
-        if self.feedback_timer > 0:
-            self.feedback_timer -= 1
-            if self.feedback_timer == 0: self.feedback_msg = ""
-
-    def draw(self, surface):
-        surface.fill(BG_COLOR)
-        lang = self.director.language
-
-        quota_txt = FONT_SMALL.render(t("quota", lang, n=self.remaining_challenges), True, COLOR_TARGET)
-        surface.blit(quota_txt, (WIDTH - 240, 55))
-
-        if self.state == STATE_INTRO_HORIZONTAL:
-            q_surf = FONT_BIG.render(t("what_is", lang, a=self.num1, b=self.num2), True, COLOR_ACCENT)
-            surface.blit(q_surf, q_surf.get_rect(center=(WIDTH // 2, HEIGHT // 2 - 20)))
-            
-            sub_surf = FONT_MED.render(t("stack_prompt", lang), True, COLOR_TEXT_LIT)
-            surface.blit(sub_surf, sub_surf.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 50)))
-            
-            btn_hint = FONT_MED.render(t("btn_stack", lang), True, COLOR_SUCCESS)
-            surface.blit(btn_hint, btn_hint.get_rect(center=(WIDTH // 2, HEIGHT - 80)))
-            return
-
-        if self.has_tens_column:
-            pygame.draw.rect(surface, (45, 50, 70), self.carry_slot, border_radius=8)
-            pygame.draw.rect(surface, COLOR_TARGET, self.carry_slot, width=2, border_radius=8)
-            if self.carry_placed:
-                carry_txt = FONT_BIG.render("1", True, COLOR_ACCENT)
-                surface.blit(carry_txt, carry_txt.get_rect(center=self.carry_slot.center))
-
-        tens_color = COLOR_TEXT_LIT if self.state in (STATE_INTRO_STACKED, STATE_CARRY_BLOCK, STATE_SUCCESS) else (
-            COLOR_ACCENT if self.state == STATE_GUESS_TENS else COLOR_TEXT_DIM)
-        units_color = COLOR_ACCENT if self.state == STATE_GUESS_UNITS else COLOR_TEXT_LIT
-
-        surface.blit(FONT_BIG.render(str(self.t1 if self.t1 > 0 else ' '), True, tens_color), (self.tens_x, self.row1_y))
-        surface.blit(FONT_BIG.render(str(self.u1), True, units_color), (self.units_x, self.row1_y))
-        surface.blit(FONT_BIG.render("+", True, COLOR_TEXT_LIT), (self.tens_x - 60, self.row2_y))
-        surface.blit(FONT_BIG.render(str(self.t2 if self.t2 > 0 else ' '), True, tens_color), (self.tens_x, self.row2_y))
-        surface.blit(FONT_BIG.render(str(self.u2), True, units_color), (self.units_x, self.row2_y))
-        pygame.draw.line(surface, COLOR_TEXT_LIT, (self.tens_x - 60, self.row2_y + 80), (self.units_x + 50, self.row2_y + 80), 4)
-
-        if self.state == STATE_INTRO_STACKED:
-            p_surf = FONT_MED.render(t("unit_prompt", lang), True, COLOR_ACCENT)
-            surface.blit(p_surf, p_surf.get_rect(center=(WIDTH // 2, 470)))
-            btn_hint = FONT_MED.render(t("btn_start_add", lang), True, COLOR_SUCCESS)
-            surface.blit(btn_hint, btn_hint.get_rect(center=(WIDTH // 2, HEIGHT - 80)))
-            return
-
-        if self.state == STATE_GUESS_UNITS:
-            surface.blit(FONT_BIG.render(f"{self.unit_guess:02d}", True, COLOR_ACCENT), (self.units_x - 35, self.answer_y))
-        elif self.state == STATE_CARRY_BLOCK:
-            surface.blit(FONT_BIG.render(str(self.actual_unit_sum % 10), True, COLOR_TEXT_LIT), (self.units_x, self.answer_y))
-        elif self.state in (STATE_GUESS_TENS, STATE_SUCCESS):
-            surface.blit(FONT_BIG.render(str(self.actual_unit_sum % 10), True, COLOR_TEXT_LIT), (self.units_x, self.answer_y))
-            if self.state == STATE_SUCCESS:
-                tens_val = self.actual_tens_sum if self.has_tens_column else (self.actual_unit_sum // 10)
-                if tens_val > 0:
-                    surface.blit(FONT_BIG.render(str(tens_val), True, tens_color), (self.tens_x, self.answer_y))
-            elif self.state == STATE_GUESS_TENS and self.tens_started:
-                surface.blit(FONT_BIG.render(str(self.tens_guess), True, tens_color), (self.tens_x, self.answer_y))
-
-        if self.state == STATE_CARRY_BLOCK and self.carry_block and not self.carry_placed:
-            pygame.draw.rect(surface, (45, 50, 70), self.carry_block, border_radius=8)
-            pygame.draw.rect(surface, COLOR_ACCENT, self.carry_block, width=2, border_radius=8)
-            b_txt = FONT_BIG.render("1", True, COLOR_ACCENT)
-            surface.blit(b_txt, b_txt.get_rect(center=self.carry_block.center))
-
-        surface.blit(self.director.math_player_sprite, self.player_rect)
-
-        if self.feedback_msg:
-            color = COLOR_FEEDBACK if ("Try" in self.feedback_msg or "Essaie" in self.feedback_msg) else COLOR_SUCCESS
-            f_surf = FONT_MED.render(self.feedback_msg, True, color)
-            surface.blit(f_surf, f_surf.get_rect(center=(WIDTH // 2, 580)))
-
-# -------------------------------------------------------------
-# SCENE 3: LEVEL 2 SHOWCASE (INTERIM TRANSITION)
-# -------------------------------------------------------------
-class Level2Scene:
+class VictoryScene:
     def __init__(self, director):
         self.director = director
         self.announced = False
@@ -1132,61 +681,46 @@ class Level2Scene:
         if not self.announced:
             self.announced = True
             lang = self.director.language
-            self.director.speech.speak(t("level2_spoken", lang), lang=lang)
+            self.director.speech.speak(t("level_up_spoken", lang), lang=lang)
 
     def draw(self, surface):
         surface.fill(BG_COLOR)
-
         for (sx, sy, col) in self.stars:
             pygame.draw.circle(surface, col, (sx, sy), 3)
 
-        t_surf = FONT_BIG.render(t("level", self.director.language, n=2), True, COLOR_ACCENT)
-        surface.blit(t_surf, t_surf.get_rect(center=(WIDTH // 2, 170)))
+        c_surf = FONT_BIG.render("VICTORY!", True, COLOR_ACCENT)
+        surface.blit(c_surf, c_surf.get_rect(center=(WIDTH // 2, 180)))
 
-        c_surf = FONT_MED.render("CONGRATULATIONS PIPPA!", True, COLOR_SUCCESS)
-        surface.blit(c_surf, c_surf.get_rect(center=(WIDTH // 2, 250)))
-
-        m1 = FONT_SMALL.render("You collected all the gems and graduated from both schools!", True, COLOR_TEXT_LIT)
-        surface.blit(m1, m1.get_rect(center=(WIDTH // 2, 305)))
+        m1 = FONT_MED.render("You completed the quest and graduated!", True, COLOR_SUCCESS)
+        surface.blit(m1, m1.get_rect(center=(WIDTH // 2, 270)))
 
         sprite_rect = self.director.math_player_sprite.get_rect(center=(WIDTH // 2, 400))
         surface.blit(self.director.math_player_sprite, sprite_rect)
 
-        m2 = FONT_MED.render("Level 2 adventures coming soon...", True, COLOR_TARGET)
-        surface.blit(m2, m2.get_rect(center=(WIDTH // 2, 510)))
-
-# -------------------------------------------------------------
-# GLOBAL HUD
-# -------------------------------------------------------------
 def draw_persistent_hud(surface, director):
-    # Hide the HUD while on the splash / start screen
-    if isinstance(director.active_scene, StartScene):
+    if isinstance(director.active_scene, (StartScene, CharacterSelectScene)):
         return
 
     pygame.draw.rect(surface, (18, 20, 28), (0, 0, WIDTH, 50))
     pygame.draw.line(surface, (45, 52, 70), (0, 50), (WIDTH, 50), 2)
-    
-    # Level & Score Banner
+
     lvl_str = t("level", director.language, n=director.current_level)
     hud_left = f"{lvl_str}  |  {t('score', director.language)}: {director.score:05d}"
     surface.blit(FONT_MED.render(hud_left, True, COLOR_ACCENT), (20, 10))
-    
-    # Objective Tracker in Maze
+
     if isinstance(director.active_scene, MazeScene):
-        fr_tag = "OK" if director.school_fr_done else "--"
-        en_tag = "OK" if director.school_en_done else "--"
-        obj_txt = t("objective_hud", director.language, gems=len(director.active_scene.gems), fr=fr_tag, en=en_tag)
+        scene = director.active_scene
+        fr_tag = "OK" if director.school_fr_done else ("--" if scene.school_fr_rect else "N/A")
+        en_tag = "OK" if director.school_en_done else ("--" if scene.school_en_rect else "N/A")
+        obj_txt = t("objective_hud", director.language, gems=len(scene.gems), fr=fr_tag, en=en_tag)
         surface.blit(FONT_SMALL.render(obj_txt, True, COLOR_TEXT_LIT), (WIDTH - 440, 16))
 
     lang_badge = f"[{director.language.upper()}]"
     surface.blit(FONT_SMALL.render(lang_badge, True, COLOR_TEXT_DIM), (WIDTH - 60, 16))
 
-# -------------------------------------------------------------
-# MAIN GAME LOOP
-# -------------------------------------------------------------
+
 if __name__ == '__main__':
     director = GameDirector("pippa")
-
     while True:
         pygame.event.pump()
         for event in pygame.event.get():
@@ -1200,6 +734,6 @@ if __name__ == '__main__':
         director.active_scene.update()
         director.active_scene.draw(screen)
         draw_persistent_hud(screen, director)
-        
+
         pygame.display.flip()
         clock.tick(60)

@@ -2,28 +2,51 @@
 
 LEVELS = {
     1: {
-        "title": "Level 1",
+        "title": "Level 1 - Sums & Carrying",
         "maze_id": "MAZE_A",
         "challenges_per_school": 4,
-        "num1_range": (10, 19),
-        "num2_range": (4, 19),
-        "scene_type": "classroom",
+        "scene_type": "addition",
+        "num1_range": (9, 30),
+        "num2_range": (4, 20),
     },
     2: {
-        "title": "Level 2",
+        "title": "Level 2 - Compare Operators",
         "maze_id": "MAZE_B",
-        "challenges_per_school": 4,
+        "challenges_per_school": 3,
         "scene_type": "compare",
-        "compare_mode": "operator",  # Level 2: Push the operator
+        "compare_mode": "operator",
     },
     3: {
-        "title": "Level 3",
-        "maze_id": "MAZE_C",
-        "challenges_per_school": 4,
+        "title": "Level 3 - French Sight Words",
+        "maze_id": "MAZE_F",
+        "challenges_per_school": 6,
+        "scene_type": "french_words",
+        "tiers": ["TIER_1", "TIER_2"],
+    },
+    4: {
+        "title": "Level 4 - Compare Operators",
+        "maze_id": "MAZE_B",
+        "challenges_per_school": 3,
         "scene_type": "compare",
-        "compare_mode": "adjust_number",  # Level 3: Adjust the missing number
+        "compare_mode": "adjust_number",
+    },
+    5: {
+        "title": "Level 5 - Sums & Carrying",
+        "maze_id": "MAZE_A",
+        "challenges_per_school": 3,
+        "scene_type": "addition",
+        "num1_range": (19, 30),
+        "num2_range": (1, 25),
+    },
+    6: {
+        "title": "Level 6 - French Sight Words",
+        "maze_id": "MAZE_F",
+        "challenges_per_school": 8,
+        "scene_type": "french_words",
+        "tiers": ["TIER_2", "TIER_3"],
     },
 }
+
 
 def load_mazes(filepath="mazes.txt"):
     mazes = {}

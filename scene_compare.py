@@ -117,38 +117,24 @@ class CompareScene:
                 block.reset()
 
         elif self.mode == "adjust_number":
-            # 1. Randomly pick which operator to enforce (<, >, or =)
             self.fixed_op = random.choice(["<", ">", "="])
-
-            # 2. Randomly pick which side is adjustable (50% left, 50% right)
             self.adjust_side = random.choice(["left", "right"])
-
-            # 3. Create the fixed benchmark number
             self.benchmark_num = random.randint(25, 80)
 
-            # 4. Start the player's guess in an invalid position so they MUST adjust it
             if self.fixed_op == "=":
-                # Deliberately start off by ±3 to ±8
                 offset = random.choice([-8, -6, -4, 4, 6, 8])
                 self.current_guess = max(10, min(99, self.benchmark_num + offset))
             elif self.fixed_op == "<":
-                # For Left < Right:
-                # If adjusting Left: start with Left >= Right (invalid)
-                # If adjusting Right: start with Right <= Left (invalid)
                 if self.adjust_side == "left":
                     self.current_guess = min(99, self.benchmark_num + random.randint(2, 6))
                 else:
                     self.current_guess = max(10, self.benchmark_num - random.randint(2, 6))
             elif self.fixed_op == ">":
-                # For Left > Right:
-                # If adjusting Left: start with Left <= Right (invalid)
-                # If adjusting Right: start with Right >= Left (invalid)
                 if self.adjust_side == "left":
                     self.current_guess = max(10, self.benchmark_num - random.randint(2, 6))
                 else:
                     self.current_guess = min(99, self.benchmark_num + random.randint(2, 6))
 
-            # Position levers over the active side: Left is at x=270, Right is at x=630
             lever_x = 270 if self.adjust_side == "left" else 630
             self.lever_up_rect.center = (lever_x, 160)
             self.lever_down_rect.center = (lever_x, 360)
@@ -244,28 +230,35 @@ class CompareScene:
         future_rect = pygame.Rect(new_x, new_y, self.player_rect.width, self.player_rect.height)
 
         if self.mode == "operator":
-            for block in self.blocks:
-                if future_rect.colliderect(block.rect):
-                    push_dx = new_x - self.player_rect.x
-                    push_dy = new_y - self.player_rect.y
-                    target_bx = block.rect.x + push_dx
-                    target_by = block.rect.y + push_dy
+            push_dx = new_x - self.player_rect.x
+            push_dy = new_y - self.player_rect.y
 
-                    clamped_bx = max(40, min(860 - block.rect.width, target_bx))
-                    clamped_by = max(100, min(600 - block.rect.height, target_by))
+            if push_dx != 0 or push_dy != 0:
+                for block in self.blocks:
+                    if future_rect.colliderect(block.rect):
+                        target_bx = max(30, min(870 - block.rect.width, block.rect.x + push_dx))
+                        target_by = max(100, min(600 - block.rect.height, block.rect.y + push_dy))
+                        proposed_block_rect = pygame.Rect(target_bx, target_by, block.rect.width, block.rect.height)
 
-                    if clamped_bx != target_bx:
-                        new_x = (clamped_bx - self.player_rect.width) if push_dx > 0 else (clamped_bx + block.rect.width)
-                    if clamped_by != target_by:
-                        new_y = (clamped_by - self.player_rect.height) if push_dy > 0 else (clamped_by + block.rect.height)
+                        blocked_by_other = False
+                        for other in self.blocks:
+                            if other != block and proposed_block_rect.colliderect(other.rect):
+                                blocked_by_other = True
+                                break
 
-                    block.rect.x = clamped_bx
-                    block.rect.y = clamped_by
+                        if not blocked_by_other:
+                            block.rect.x = target_bx
+                            block.rect.y = target_by
+                        else:
+                            if push_dx > 0: new_x = block.rect.left - self.player_rect.width
+                            elif push_dx < 0: new_x = block.rect.right
+                            if push_dy > 0: new_y = block.rect.top - self.player_rect.height
+                            elif push_dy < 0: new_y = block.rect.bottom
 
-                    if self.slot_rect.colliderect(block.rect):
-                        block.rect.center = self.slot_rect.center
-                        self.check_operator_answer(block)
-                        return
+                        if self.slot_rect.colliderect(block.rect):
+                            block.rect.center = self.slot_rect.center
+                            self.check_operator_answer(block)
+                            return
 
         elif self.mode == "adjust_number":
             if self.lever_cooldown > 0:
@@ -366,7 +359,6 @@ class CompareScene:
                 surface.blit(txt, txt.get_rect(center=b.rect.center))
 
         elif self.mode == "adjust_number":
-            # Operator in dead center
             op_surf = FONT_BIG.render(self.fixed_op, True, COLOR_ACCENT)
             surface.blit(op_surf, op_surf.get_rect(center=(450, 260)))
 
@@ -376,7 +368,6 @@ class CompareScene:
             color_l = COLOR_ACCENT if self.adjust_side == "left" else COLOR_TEXT_LIT
             color_r = COLOR_ACCENT if self.adjust_side == "right" else COLOR_TEXT_LIT
 
-            # Framing box around whichever number is being adjusted
             box_adj = pygame.Rect(0, 0, 120, 84)
             adj_x = 270 if self.adjust_side == "left" else 630
             box_adj.center = (adj_x, 260)
@@ -388,7 +379,6 @@ class CompareScene:
             surface.blit(surf_l, surf_l.get_rect(center=(270, 260)))
             surface.blit(surf_r, surf_r.get_rect(center=(630, 260)))
 
-            # Levers: +1 above at y=160, -1 below at y=360
             pygame.draw.rect(surface, (16, 185, 129), self.lever_up_rect, border_radius=8)
             pygame.draw.rect(surface, COLOR_TEXT_LIT, self.lever_up_rect, width=2, border_radius=8)
             t_up = FONT_MED.render("+ 1", True, COLOR_TEXT_LIT)
@@ -423,8 +413,8 @@ if __name__ == "__main__":
     clock = pygame.time.Clock()
 
     director = GameDirector("pippa")
-    TEST_MODE = "adjust_number"  # Switch between "operator" or "adjust_number"
-    director.language = "en"    # Switch between "en" or "fr"
+    TEST_MODE = "operator"  # Switch between "operator" or "adjust_number"
+    director.language = "en"
     scene = CompareScene(director, total_challenges=8, language="en", mode=TEST_MODE)
     director.active_scene = scene
 
