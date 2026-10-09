@@ -7,7 +7,7 @@ LEVELS = {
         "challenges_per_school": 4,
         "scene_type": "addition",
         "num1_range": (9, 29),
-        "num2_range": (4, 19),
+        "num2_range": (6, 19),
     },
     2: {
         "title": "Level 2 - Compare Operators",
