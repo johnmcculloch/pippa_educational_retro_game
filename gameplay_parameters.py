@@ -1,64 +1,74 @@
-# gameplay_parameters.py
+import os
 
 LEVELS = {
     1: {
-        "title": "Level 1 - Sums & Carrying",
+        "title": "Level 1 - Addition & La Fabrique des Mots (Spelling)",
         "maze_id": "MAZE_A",
-        "challenges_per_school": 4,
+        "challenges_per_school": 3,
         "scene_type": "addition",
-        "num1_range": (9, 29),
-        "num2_range": (6, 19),
+        "french_scene_type": "french_spelling",  # Level 1 École -> Spelling!
+        "tiers": ["TIER_1", "TIER_2"],
+        "num1_range": (10, 19),
+        "num2_range": (4, 19),
     },
     2: {
-        "title": "Level 2 - Compare Operators",
+        "title": "Level 2 - Comparisons & Le Train des Phrases (Word Order)",
         "maze_id": "MAZE_B",
         "challenges_per_school": 3,
         "scene_type": "compare",
         "compare_mode": "operator",
-    },
-    3: {
-        "title": "Level 3 - French Sight Words",
-        "maze_id": "MAZE_F",
-        "challenges_per_school": 6,
-        "scene_type": "french_words",
+        "french_scene_type": "french_sentence",  # Level 2 École -> Sentence Train!
         "tiers": ["TIER_1", "TIER_2"],
     },
-    4: {
-        "title": "Level 4 - Compare Operators",
-        "maze_id": "MAZE_B",
+    3: {
+        "title": "Level 3 - Levers & French Sight Words",
+        "maze_id": "MAZE_C",
         "challenges_per_school": 3,
         "scene_type": "compare",
         "compare_mode": "adjust_number",
+        "french_scene_type": "french_words",     # Level 3 École -> Context Words!
+        "tiers": ["TIER_1", "TIER_2", "TIER_3"],
     },
-    5: {
-        "title": "Level 5 - Sums & Carrying",
+    4: {
+        "title": "Level 4 - Grand Finale & Le Train des Phrases",
         "maze_id": "MAZE_A",
-        "challenges_per_school": 3,
+        "challenges_per_school": 4,
         "scene_type": "addition",
-        "num1_range": (19, 39),
-        "num2_range": (1, 28),
-    },
-    6: {
-        "title": "Level 6 - French Sight Words",
-        "maze_id": "MAZE_F",
-        "challenges_per_school": 8,
-        "scene_type": "french_words",
-        "tiers": ["TIER_2", "TIER_3"],
+        "french_scene_type": "french_sentence",  # Level 4 École -> Sentence Train!
+        "tiers": ["TIER_1", "TIER_2", "TIER_3", "TIER_4"],
+        "num1_range": (15, 39),
+        "num2_range": (10, 29),
     },
 }
 
 
 def load_mazes(filepath="mazes.txt"):
     mazes = {}
-    current_maze = None
-    with open(filepath, "r", encoding="utf-8") as f:
-        for line in f:
-            stripped = line.strip()
-            if not stripped or stripped.startswith("//"):
-                continue
-            if stripped.startswith("[") and stripped.endswith("]"):
-                current_maze = stripped[1:-1]
-                mazes[current_maze] = []
-            elif current_maze:
-                mazes[current_maze].append(stripped)
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    full_path = filepath if os.path.isabs(filepath) else os.path.join(base_dir, filepath)
+
+    if not os.path.exists(full_path):
+        return mazes
+
+    current_id = None
+    current_grid = []
+    try:
+        with open(full_path, "r", encoding="utf-8") as f:
+            for raw_line in f:
+                line = raw_line.rstrip("\r\n")
+                stripped = line.strip()
+                if not stripped or stripped.startswith("//"):
+                    continue
+                if stripped.startswith("[") and stripped.endswith("]"):
+                    if current_id and current_grid:
+                        mazes[current_id] = current_grid
+                    current_id = stripped[1:-1].strip()
+                    current_grid = []
+                else:
+                    current_grid.append(line)
+        if current_id and current_grid:
+            mazes[current_id] = current_grid
+    except Exception as e:
+        print(f"Warning: Could not parse {filepath}: {e}")
+
     return mazes
