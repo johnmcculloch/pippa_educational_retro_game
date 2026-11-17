@@ -476,13 +476,16 @@ class PracticeSelectScene:
             if event.key in (pygame.K_UP, pygame.K_w):
                 self.selected_idx = (self.selected_idx - 1) % len(self.options)
                 self.director.sfx.play_gem()
+                self.stick_cooldown = 15
             elif event.key in (pygame.K_DOWN, pygame.K_s):
                 self.selected_idx = (self.selected_idx + 1) % len(self.options)
                 self.director.sfx.play_gem()
+                self.stick_cooldown = 15
             elif event.key in (pygame.K_LEFT, pygame.K_a, pygame.K_RIGHT, pygame.K_d):
                 self.practice_lang = "fr" if self.practice_lang == "en" else "en"
                 self.director.practice_lang = self.practice_lang
                 self.director.sfx.play_gem()
+                self.stick_cooldown = 15
             elif event.key in (pygame.K_ESCAPE, pygame.K_q):
                 self.director.active_scene = ModeSelectScene(self.director)
             elif event.key in (pygame.K_SPACE, pygame.K_RETURN, pygame.K_KP_ENTER):
@@ -497,31 +500,29 @@ class PracticeSelectScene:
             if hy != 0:
                 self.selected_idx = (self.selected_idx - hy) % len(self.options)
                 self.director.sfx.play_gem()
+                self.stick_cooldown = 15
             if hx != 0:
                 self.practice_lang = "fr" if self.practice_lang == "en" else "en"
                 self.director.practice_lang = self.practice_lang
                 self.director.sfx.play_gem()
+                self.stick_cooldown = 15
+
+    def update(self):
+        if self.stick_cooldown > 0:
+            self.stick_cooldown -= 1
+            return
+        # Only poll the analog controller stick in update() so keyboard presses aren't double-counted
+        vy = self.director.get_stick_vertical()
+        if abs(vy) > 0.5:
+            self.selected_idx = (self.selected_idx + (1 if vy > 0 else -1)) % len(self.options)
+            self.director.sfx.play_gem()
+            self.stick_cooldown = 15
 
     def _confirm(self):
         self.director.practice_lang = self.practice_lang
         self.director.pending_practice_key = self.options[self.selected_idx]["key"]
         self.director.sfx.play_gem()
         self.director.active_scene = CharacterSelectScene(self.director)
-
-    def update(self):
-        if self.stick_cooldown > 0:
-            self.stick_cooldown -= 1
-            return
-        mx, my = self.director.get_movement_vector(speed=1.0)
-        if abs(my) > 0.5:
-            self.selected_idx = (self.selected_idx + (1 if my > 0 else -1)) % len(self.options)
-            self.director.sfx.play_gem()
-            self.stick_cooldown = 15
-        elif abs(mx) > 0.5:
-            self.practice_lang = "fr" if self.practice_lang == "en" else "en"
-            self.director.practice_lang = self.practice_lang
-            self.director.sfx.play_gem()
-            self.stick_cooldown = 15
 
     def draw(self, surface):
         surface.fill(BG_COLOR)
@@ -570,9 +571,11 @@ class CharacterSelectScene:
             if event.key in (pygame.K_LEFT, pygame.K_a):
                 self.selected_idx = (self.selected_idx - 1) % len(CHARACTER_KEYS)
                 self.director.sfx.play_gem()
+                self.stick_cooldown = 15
             elif event.key in (pygame.K_RIGHT, pygame.K_d):
                 self.selected_idx = (self.selected_idx + 1) % len(CHARACTER_KEYS)
                 self.director.sfx.play_gem()
+                self.stick_cooldown = 15
             elif event.key in (pygame.K_ESCAPE, pygame.K_q):
                 self.director.active_scene = ModeSelectScene(self.director)
             elif event.key in (pygame.K_SPACE, pygame.K_RETURN, pygame.K_KP_ENTER):
@@ -584,22 +587,25 @@ class CharacterSelectScene:
             if hx != 0:
                 self.selected_idx = (self.selected_idx + hx) % len(CHARACTER_KEYS)
                 self.director.sfx.play_gem()
-
-    def _confirm(self):
-        chosen_key = CHARACTER_KEYS[self.selected_idx]
-        self.director.sfx.play_gem()
-        self.director.set_character(chosen_key)
+                self.stick_cooldown = 15
 
     def update(self):
         self.pulse += 1
         if self.stick_cooldown > 0:
             self.stick_cooldown -= 1
             return
-        mx, _ = self.director.get_movement_vector(speed=1.0)
-        if abs(mx) > 0.5:
-            self.selected_idx = (self.selected_idx + (1 if mx > 0 else -1)) % len(CHARACTER_KEYS)
+        # Poll horizontal analog stick axis only so keyboard taps aren't counted twice
+        hx = self.director.get_stick_horizontal()
+        if abs(hx) > 0.5:
+            self.selected_idx = (self.selected_idx + (1 if hx > 0 else -1)) % len(CHARACTER_KEYS)
             self.director.sfx.play_gem()
             self.stick_cooldown = 15
+
+
+    def _confirm(self):
+        chosen_key = CHARACTER_KEYS[self.selected_idx]
+        self.director.sfx.play_gem()
+        self.director.set_character(chosen_key)
 
     def draw(self, surface):
         surface.fill(BG_COLOR)
@@ -896,6 +902,22 @@ class GameDirector:
             self.controller = pygame.joystick.Joystick(0)
             self.controller_centered = False
             print(f"Connected: {self.controller.get_name()}")
+
+    def get_stick_horizontal(self):
+        if not self.controller or not self.controller_centered:
+            return 0.0
+
+        lx = self.controller.get_axis(0)
+        rx = 0.0
+        num_axes = self.controller.get_numaxes()
+        if num_axes == 4:
+            rx = self.controller.get_axis(2)
+        elif num_axes >= 5:
+            rx = self.controller.get_axis(3)
+
+        if abs(rx) > abs(lx):
+            return rx
+        return lx
 
     def handle_global_event(self, event):
         if event.type == pygame.JOYDEVICEADDED:

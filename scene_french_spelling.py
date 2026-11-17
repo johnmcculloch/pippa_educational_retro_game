@@ -2,6 +2,7 @@ import pygame
 import random
 import os
 import sys
+from carry_mechanics import CarryManager
 
 if not pygame.font.get_init():
     pygame.font.init()
@@ -33,16 +34,12 @@ class LetterBlock:
 
 
 class FrenchSpellingScene:
-    """
-    La Fabrique des Mots: Pippa listens to a French word from mots_100.txt
-    (in sentence context) and pushes letter tiles in sequence to spell it!
-    Pressing SPACE / ENTER / (A) repeats the audio at any time.
-    """
     def __init__(self, director, total_challenges=4, tier=["TIER_1", "TIER_2"],
                  contexts_file="french_contexts.txt", words_file="mots_100.txt"):
         self.director = director
         self.language = "fr"
         self.remaining_challenges = total_challenges
+        self.carry = CarryManager()
 
         if isinstance(tier, str):
             self.active_tiers = [tier]
@@ -55,12 +52,10 @@ class FrenchSpellingScene:
         self.contexts = self.load_contexts(contexts_file, self.active_tiers)
         self.word_bank = self.load_word_bank(words_file, self.active_tiers)
 
-        # Hint pad ("Loupe Magique") to briefly peek at spelling if stuck
         self.hint_rect = pygame.Rect(40, 140, 145, 48)
         self.hint_timer = 0
         self.hint_cooldown = 0
 
-        # Replay audio pad
         self.audio_rect = pygame.Rect(700, 140, 165, 48)
         self.audio_cooldown = 0
 
@@ -130,6 +125,7 @@ class FrenchSpellingScene:
         return list(set(words)) if words else ["sur", "dans", "avec", "ami", "petit"]
 
     def spawn_new_problem(self):
+        self.carry.reset()
         item = random.choice(self.contexts)
         self.target_word = item["target"].strip()
         self.sentence_template = item["sentence"]
@@ -176,12 +172,12 @@ class FrenchSpellingScene:
 
         for idx, ch in enumerate(all_tiles):
             bx = tile_start_x + idx * spacing
-            by = 430 if idx % 2 == 0 else 475
+            by = 435 if idx % 2 == 0 else 480
             self.blocks.append(LetterBlock(ch, (bx, by)))
 
         self.player_rect.topleft = (430, 560)
         self.state = "PLAYING"
-        self.feedback_msg = "Appuie sur ESPACE ou (A) pour réécouter le mot !"
+        self.feedback_msg = "Touche une lettre pour la porter dans la case qui brille !"
         self.feedback_color = COLOR_TARGET
         self.first_try = True
         self.hint_timer = 45
@@ -208,9 +204,56 @@ class FrenchSpellingScene:
                 "life": random.randint(25, 45)
             })
 
+    def _on_letter_delivered(self, block):
+        active_slot = self.get_active_slot()
+        if not active_slot:
+            return
+
+        if block.char.lower() == active_slot["char"].lower():
+            active_slot["filled"] = True
+            if block in self.blocks:
+                self.blocks.remove(block)
+            self.director.sfx.play_gem()
+            self._spawn_confetti(active_slot["rect"].center)
+
+            if self.get_active_slot() is None:
+                self._trigger_word_complete()
+            else:
+                self.feedback_msg = "Super ! Lettre suivante ! (ESPACE = réécouter)"
+                self.feedback_color = COLOR_SUCCESS
+        else:
+            self.director.sfx.play_buzz()
+            block.reset()
+            self.first_try = False
+            if hasattr(self.director, "streak"):
+                self.director.streak = 0
+            self.feedback_msg = "Oups ! Utilise la Loupe ou appuie sur ESPACE pour écouter !"
+            self.feedback_color = COLOR_FEEDBACK
+
     def handle_event(self, event):
+        active_slot = self.get_active_slot()
+        target_rect = active_slot["rect"] if active_slot else None
+
+        def check_helper_pads(pos):
+            if self.hint_rect.collidepoint(pos):
+                self.hint_timer = 75
+                self.director.sfx.play_gem()
+                return True
+            if self.audio_rect.collidepoint(pos):
+                self._speak_prompt()
+                return True
+            return False
+
+        if self.state == "PLAYING":
+            if self.carry.handle_event(
+                event, self.blocks, target_rect, self._on_letter_delivered,
+                player_rect=self.player_rect, sfx=self.director.sfx,
+                extra_tap_Callback=check_helper_pads
+            ):
+                return
+
         is_action_press = (
-            (event.type == pygame.JOYBUTTONDOWN and event.button in (0, 1, 7)) or
+            (event.type == pygame.JOYBUTTONDOWN and event.button in (0, 7)) or
             (event.type == pygame.KEYDOWN and event.key in (pygame.K_RETURN, pygame.K_SPACE, pygame.K_KP_ENTER))
         )
         if is_action_press:
@@ -219,7 +262,6 @@ class FrenchSpellingScene:
             elif self.state == "DISMISSED":
                 self.director.exit_school()
             elif self.state == "PLAYING":
-                # Repeat the spoken sentence & target word whenever SPACE or (A) is pressed!
                 self._speak_prompt()
 
     def _advance_or_dismiss(self):
@@ -257,64 +299,24 @@ class FrenchSpellingScene:
             return
 
         move_x, move_y = self.director.get_movement_vector(self.speed)
-        new_x = max(20, min(900 - self.player_rect.width - 20, self.player_rect.x + int(move_x)))
-        new_y = max(80, min(650 - self.player_rect.height - 20, self.player_rect.y + int(move_y)))
-        future_rect = pygame.Rect(new_x, new_y, self.player_rect.width, self.player_rect.height)
+        self.player_rect.x = max(20, min(900 - self.player_rect.width - 20, self.player_rect.x + int(move_x)))
+        self.player_rect.y = max(80, min(650 - self.player_rect.height - 20, self.player_rect.y + int(move_y)))
 
-        if future_rect.colliderect(self.hint_rect) and self.hint_cooldown == 0:
+        if self.player_rect.colliderect(self.hint_rect) and self.hint_cooldown == 0:
             self.hint_timer = 75
             self.hint_cooldown = 90
             self.director.sfx.play_gem()
 
-        if future_rect.colliderect(self.audio_rect) and self.audio_cooldown == 0:
+        if self.player_rect.colliderect(self.audio_rect) and self.audio_cooldown == 0:
             self.audio_cooldown = 90
             self._speak_prompt()
 
         active_slot = self.get_active_slot()
-        push_dx = new_x - self.player_rect.x
-        push_dy = new_y - self.player_rect.y
-
-        if (push_dx != 0 or push_dy != 0) and active_slot:
-            for block in self.blocks[:]:
-                if future_rect.colliderect(block.rect):
-                    target_bx = max(30, min(870 - block.rect.width, block.rect.x + push_dx))
-                    target_by = max(120, min(610 - block.rect.height, block.rect.y + push_dy))
-                    prop_rect = pygame.Rect(target_bx, target_by, block.rect.width, block.rect.height)
-
-                    blocked = any(other != block and prop_rect.colliderect(other.rect) for other in self.blocks)
-                    if not blocked:
-                        block.rect.x = target_bx
-                        block.rect.y = target_by
-                    else:
-                        if push_dx > 0: new_x = block.rect.left - self.player_rect.width
-                        elif push_dx < 0: new_x = block.rect.right
-                        if push_dy > 0: new_y = block.rect.top - self.player_rect.height
-                        elif push_dy < 0: new_y = block.rect.bottom
-
-                    if active_slot["rect"].colliderect(block.rect):
-                        if block.char.lower() == active_slot["char"].lower():
-                            active_slot["filled"] = True
-                            self.blocks.remove(block)
-                            self.director.sfx.play_gem()
-                            self._spawn_confetti(active_slot["rect"].center)
-
-                            if self.get_active_slot() is None:
-                                self._trigger_word_complete()
-                            else:
-                                self.feedback_msg = "Super ! Lettre suivante ! (ESPACE = réécouter)"
-                                self.feedback_color = COLOR_SUCCESS
-                        else:
-                            self.director.sfx.play_buzz()
-                            block.reset()
-                            self.first_try = False
-                            if hasattr(self.director, "streak"):
-                                self.director.streak = 0
-                            self.feedback_msg = "Oups ! Utilise la Loupe ou appuie sur ESPACE pour écouter !"
-                            self.feedback_color = COLOR_FEEDBACK
-                        return
-
-        self.player_rect.x = new_x
-        self.player_rect.y = new_y
+        target_rect = active_slot["rect"] if active_slot else None
+        self.carry.update(
+            self.player_rect, self.blocks, target_rect,
+            self._on_letter_delivered, sfx=self.director.sfx
+        )
 
     def _trigger_word_complete(self):
         self.state = "SUCCESS"
@@ -336,7 +338,7 @@ class FrenchSpellingScene:
     def draw(self, surface):
         surface.fill(BG_COLOR)
 
-        banner = FONT_MED.render("La Fabrique des Mots : Pousse la lettre dans la case qui brille !", True, COLOR_ACCENT)
+        banner = FONT_MED.render("La Fabrique des Mots : Porte la lettre dans la case qui brille !", True, COLOR_ACCENT)
         surface.blit(banner, banner.get_rect(center=(450, 72)))
 
         display_sent = self.sentence_template.replace("___", "[ ? ]" if self.state == "PLAYING" else self.target_word)
@@ -383,6 +385,7 @@ class FrenchSpellingScene:
         for p in self.particles:
             pygame.draw.circle(surface, p["color"], (int(p["x"]), int(p["y"])), 5)
 
+        self.carry.draw_carried_highlight(surface, self.player_rect)
         surface.blit(self.director.math_player_sprite, self.player_rect)
 
         quota_str = f"Mots restants : {self.remaining_challenges}"
@@ -391,32 +394,3 @@ class FrenchSpellingScene:
         if self.feedback_msg:
             f_surf = FONT_MED.render(self.feedback_msg, True, self.feedback_color)
             surface.blit(f_surf, f_surf.get_rect(center=(450, 355)))
-
-
-if __name__ == "__main__":
-    from pippa_educational_retrogame import GameDirector, draw_persistent_hud
-    pygame.init()
-    screen = pygame.display.set_mode((900, 650))
-    pygame.display.set_caption("Test - La Fabrique des Mots (Spelling)")
-    clock = pygame.time.Clock()
-
-    director = GameDirector("pippa")
-    director.language = "fr"
-    scene = FrenchSpellingScene(director, total_challenges=5, tier=["TIER_1", "TIER_2"])
-    director.active_scene = scene
-    director.exit_school = lambda: print("Finished school!")
-
-    while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                director.speech.stop()
-                pygame.quit()
-                sys.exit()
-            director.handle_global_event(event)
-            scene.handle_event(event)
-
-        scene.update()
-        scene.draw(screen)
-        draw_persistent_hud(screen, director)
-        pygame.display.flip()
-        clock.tick(60)
