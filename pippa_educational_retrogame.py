@@ -217,9 +217,21 @@ class SmartSpeechEngine:
 # ==============================================================================
 # HIGH SCORE LEADERBOARD HELPERS
 # ==============================================================================
+
 def get_high_scores_path():
-    base_dir = os.path.dirname(os.path.abspath(__file__))
-    return os.path.join(base_dir, "high_scores.txt")
+    # 1. Android (Buildozer / python-for-android writable app storage)
+    if "ANDROID_PRIVATE" in os.environ:
+        base_dir = os.environ["ANDROID_PRIVATE"]
+        return os.path.join(base_dir, "high_scores.txt")
+
+    # 2. Desktop / iOS ($HOME or XDG_DATA_HOME)
+    home_dir = os.path.expanduser("~")
+    if os.access(home_dir, os.W_OK):
+        return os.path.join(home_dir, ".pippa_retrogame_highscores.txt")
+
+    # 3. Ultimate fallback (system temp directory if everything else is read-only)
+    return os.path.join(tempfile.gettempdir(), ".pippa_retrogame_highscores.txt")
+
 
 def load_high_scores():
     path = get_high_scores_path()
