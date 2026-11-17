@@ -139,6 +139,43 @@ class SoundFX:
 # ==============================================================================
 # SMART SPEECH ENGINE (gTTS Cached + OS Native Fallback)
 # ==============================================================================
+import shutil
+import threading
+
+# ==============================================================================
+# AUTO-BOOTSTRAP gTTS (Bypasses PEP 668 externally-managed-environment on Pi)
+# ==============================================================================
+try:
+    from gtts import gTTS
+    HAS_GTTS = True
+except ImportError:
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    local_libs = os.path.join(base_dir, ".pippa_libs")
+    if os.path.isdir(local_libs) and local_libs not in sys.path:
+        sys.path.insert(0, local_libs)
+    try:
+        from gtts import gTTS
+        HAS_GTTS = True
+    except ImportError:
+        print("Installing gTTS locally into .pippa_libs for natural voices...")
+        try:
+            subprocess.check_call([
+                sys.executable, "-m", "pip", "install",
+                "--target", local_libs, "--quiet", "gTTS"
+            ])
+            if local_libs not in sys.path:
+                sys.path.insert(0, local_libs)
+            from gtts import gTTS
+            HAS_GTTS = True
+            print("gTTS installed successfully!")
+        except Exception as e:
+            print(f"Auto-install of gTTS failed: {e}")
+            HAS_GTTS = False
+
+
+# ==============================================================================
+# SMART SPEECH ENGINE (gTTS Cached + Reliable Pi/Mac MP3 Playback)
+# ==============================================================================
 class SmartSpeechEngine:
     def __init__(self):
         base_dir = os.path.dirname(os.path.abspath(__file__))
@@ -146,25 +183,94 @@ class SmartSpeechEngine:
         os.makedirs(self.cache_dir, exist_ok=True)
         self.proc = None
         self.channel = None
+        self.is_generating = False
+
+        # Detect the best CLI audio player on macOS / Raspberry Pi Linux
+        self.cli_player = None
+        if sys.platform == "darwin" and shutil.which("afplay"):
+            self.cli_player = ["afplay"]
+        else:
+            for cmd in (
+                ["mpg123", "-q"],
+                ["ffplay", "-nodisp", "-autoexit", "-loglevel", "quiet"],
+                ["mpv", "--no-video", "--really-quiet"],
+                ["cvlc", "--play-and-exit", "--quiet"],
+            ):
+                if shutil.which(cmd[0]):
+                    self.cli_player = cmd
+                    break
 
     def stop(self):
+        self.is_generating = False
         if self.proc and self.proc.poll() is None:
             try:
                 self.proc.terminate()
             except Exception:
                 pass
         self.proc = None
+
         if self.channel and self.channel.get_busy():
             try:
                 self.channel.stop()
             except Exception:
                 pass
 
+        if pygame.mixer.get_init():
+            try:
+                if pygame.mixer.music.get_busy():
+                    pygame.mixer.music.stop()
+            except Exception:
+                pass
+
     def is_busy(self):
+        if self.is_generating:
+            return True
         if self.proc and self.proc.poll() is None:
             return True
         if self.channel and self.channel.get_busy():
             return True
+        if pygame.mixer.get_init():
+            try:
+                if pygame.mixer.music.get_busy():
+                    return True
+            except Exception:
+                pass
+        return False
+
+    def _play_mp3(self, mp3_path):
+        """Plays an MP3 file reliably across macOS and Raspberry Pi Linux."""
+        if not os.path.exists(mp3_path) or os.path.getsize(mp3_path) == 0:
+            return False
+
+        # 1. Prefer native CLI media player (afplay on Mac, mpg123/ffplay/mpv/vlc on Pi)
+        if self.cli_player:
+            try:
+                self.proc = subprocess.Popen(
+                    self.cli_player + [mp3_path],
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL
+                )
+                return True
+            except Exception:
+                pass
+
+        # 2. Fallback to pygame.mixer.music (streams MP3s cleanly on Linux)
+        if pygame.mixer.get_init():
+            try:
+                pygame.mixer.music.load(mp3_path)
+                pygame.mixer.music.play()
+                return True
+            except Exception:
+                pass
+
+            # 3. Last-resort Sound object
+            try:
+                snd = pygame.mixer.Sound(mp3_path)
+                self.channel = snd.play()
+                return True
+            except Exception:
+                pass
+
         return False
 
     def speak(self, text, lang="en"):
@@ -178,41 +284,34 @@ class SmartSpeechEngine:
         digest = hashlib.md5(f"{lang}:{speed_tag}:{text}".encode("utf-8")).hexdigest()
         mp3_path = os.path.join(self.cache_dir, f"{lang}_{speed_tag}_{digest}.mp3")
 
-        if HAS_GTTS and not os.path.exists(mp3_path):
-            try:
-                tts = gTTS(text=text, lang=lang, slow=use_slow)
-                tts.save(mp3_path)
-            except Exception:
-                pass
-
-        if os.path.exists(mp3_path):
-            if sys.platform == "darwin":
-                # afplay "-r 0.9" slightly relaxes playback speed if needed
-                self.proc = subprocess.Popen(["afplay", mp3_path])
+        # 1. If already cached in voice_cache/, play immediately!
+        if os.path.exists(mp3_path) and os.path.getsize(mp3_path) > 0:
+            if self._play_mp3(mp3_path):
                 return
-            elif pygame.mixer.get_init():
-                try:
-                    snd = pygame.mixer.Sound(mp3_path)
-                    self.channel = snd.play()
-                    return
-                except Exception:
-                    pass
 
-        # Fallback to native OS speech at child-friendly 130 WPM (macOS) or 115 WPM (Linux)
+        # 2. If not cached yet, generate via gTTS in a background thread
+        if HAS_GTTS:
+            self.is_generating = True
+            def _generate_and_play():
+                try:
+                    tts = gTTS(text=text, lang=lang, slow=use_slow)
+                    tts.save(mp3_path)
+                    if self.is_generating:
+                        self._play_mp3(mp3_path)
+                except Exception as e:
+                    print(f"gTTS warning: {e}")
+                finally:
+                    self.is_generating = False
+
+            threading.Thread(target=_generate_and_play, daemon=True).start()
+            return
+
+        # 3. Fallback on macOS only (espeak-ng on Linux is intentionally disabled!)
         if sys.platform == "darwin":
             voice = "Thomas" if lang == "fr" else "Samantha"
             rate = "130" if lang == "fr" else "150"
             self.proc = subprocess.Popen(["say", "-v", voice, "-r", rate, text])
-        else:
-            v_flag = "fr" if lang == "fr" else "en"
-            rate = "115" if lang == "fr" else "140"
-            try:
-                self.proc = subprocess.Popen(["espeak-ng", "-v", v_flag, "-s", rate, text])
-            except FileNotFoundError:
-                try:
-                    self.proc = subprocess.Popen(["espeak", "-v", v_flag, "-s", rate, text])
-                except Exception:
-                    pass
+
 
 # ==============================================================================
 # HIGH SCORE LEADERBOARD HELPERS
